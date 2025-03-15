@@ -1,6 +1,16 @@
 import axios from 'axios'
 import { apiUrl } from './apiConfig'
 
+export const getQuizzesWithQuestions = async () => {
+    try {
+        const response = await axios.get(apiUrl.quizzeUrl.getQuizzesWithQuestions)
+        return response.data
+    } catch (error) {
+        console.log('Get all quizze failed')
+        throw error
+    }
+}
+
 export const getQuizzeBySlug = async (slug) => {
     try {
         const response = await axios.get(apiUrl.quizzeUrl.getQuizzeBySlug(slug))

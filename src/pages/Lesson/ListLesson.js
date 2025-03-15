@@ -1,39 +1,47 @@
-import className from "classnames/bind";
-import styles from "./ListLesson.module.scss";
-import { useEffect, useState } from "react";
-import { getAllLesson } from "../../api/lessonApi";
+import className from 'classnames/bind'
+import styles from './ListLesson.module.scss'
+import { useEffect, useState } from 'react'
+import { getAllLesson } from '../../api/lessonApi'
+import MainAccount from '../../layouts/MainAccount/MainAccount'
+import Table from '../../components/Table/Table'
 
-const cx = className.bind(styles);
+const cx = className.bind(styles)
 
 function ListLesson() {
-  const [lessons, setLessons] = useState([]);
+    const [lessons, setLessons] = useState([])
 
-  useEffect(() => {
-    const getLesson = async () => {
-      try {
-        const response = await getAllLesson();
-        setLessons(response.data.lessons);
-        console.log("Lessons:", response.data.lessons);
-      } catch (error) {
-        console.log("Get all lesson failed: ", error);
-      }
-    };
+    useEffect(() => {
+        const getLesson = async () => {
+            try {
+                const response = await getAllLesson()
+                setLessons(response.data.lessons)
+            } catch (error) {
+                console.log('Get all lesson failed: ', error)
+            }
+        }
 
-    getLesson();
-  }, []);
-  return (
-    <div className={cx("wrapper")}>
-      <h2>Danh sách bài học</h2>
-      {lessons.map((lesson) => (
-        <div key={lesson._id}>
-          <p>{lesson.courseName}</p>
-          <h3>{lesson.title}</h3>
-          <p>{lesson.videoUrl}</p>
-          <div dangerouslySetInnerHTML={{ __html: lesson.content }}></div>
+        getLesson()
+    }, [])
+    return (
+        <div className={cx('wrapper')}>
+            <MainAccount>
+                <h1>List Lessons</h1>
+                <Table headings={['Index', 'Lesson', 'Course', '']}>
+                    {lessons.map((lesson, index) => (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{lesson.title}</td>
+                            <td>{lesson.courseId.title}</td>
+                            <td>
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                </Table>
+            </MainAccount>
         </div>
-      ))}
-    </div>
-  );
+    )
 }
 
-export default ListLesson;
+export default ListLesson
