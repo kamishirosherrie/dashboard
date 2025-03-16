@@ -6,10 +6,12 @@ const apiUrl = {
     },
     userUrl: {
         getUser: `${API_BASE_URL}/user`,
+        addUser: `${API_BASE_URL}/user/addUser`,
     },
     courseUrl: {
         getCourse: `${API_BASE_URL}/course`,
         getCourseBySlug: (slug) => `${API_BASE_URL}/course/slug/${slug}`,
+        addNewCourse: `${API_BASE_URL}/course/addCourse`,
     },
     lessonUrl: {
         addNewLesson: `${API_BASE_URL}/lesson/addNewLesson`,
@@ -23,6 +25,10 @@ const apiUrl = {
     },
     questionUrl: {
         getQuestionByQuizzeSlug: (quizzeSlug) => `${API_BASE_URL}/question/getQuestionByQuizzeSlug/${quizzeSlug}`,
+        addNewQuestion: `${API_BASE_URL}/question/addNewQuestion`,
+    },
+    questionTypeUrl: {
+        getQuestionType: `${API_BASE_URL}/questionType/`,
     },
     dictionaryUrl: {
         getWord: (word) => `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`,

@@ -10,3 +10,13 @@ export const getQuestionByQuizzeSlug = async (slug) => {
         throw error
     }
 }
+
+export const addNewQuestion = async (question) => {
+    try {
+        const response = await axios.post(apiUrl.questionUrl.addNewQuestion, question)
+        return response.data
+    } catch (error) {
+        console.log('Add new question failed')
+        throw error
+    }
+}

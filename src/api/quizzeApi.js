@@ -30,3 +30,13 @@ export const getQuizzeByLessonSlug = async (lessonSlug) => {
         throw error
     }
 }
+
+export const addNewQuizze = async (quizze) => {
+    try {
+        const response = await axios.post(apiUrl.quizzeUrl.addNewQuizze, quizze)
+        return response.data
+    } catch (error) {
+        console.log('Add new quizze failed')
+        throw error
+    }
+}

@@ -6,10 +6,12 @@ import styles from './AddLesson.module.scss'
 
 import { addNewLesson } from '../../api/lessonApi'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
+import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind(styles)
 
 function AddLesson() {
+    const navigate = useNavigate()
     const [lesson, setLesson] = useState({
         title: '',
         videoUrl: '',
@@ -31,6 +33,7 @@ function AddLesson() {
         try {
             const res = await addNewLesson(lesson)
             console.log('Response:', res)
+            navigate('/admin/lesson')
         } catch (error) {
             console.log('Error:', error)
         }

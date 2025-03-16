@@ -1,11 +1,16 @@
 import classNames from 'classnames/bind'
 import styles from './AddQuizze.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { addNewQuizze } from '../../api/quizzeApi'
+import { addNewQuestion } from '../../api/questionApi'
+import { getQuestionType } from '../../api/questionTypeApi'
+import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind(styles)
 
 function AddQuizze() {
+    const navigate = useNavigate()
     const [quizze, setQuizze] = useState({
         lessonName: '',
         title: '',
@@ -15,18 +20,20 @@ function AddQuizze() {
 
     const [question, setQuestion] = useState([])
 
+    const [questionTypes, setQuestionTypes] = useState([])
+
     const handleAddQuestion = () => {
-        setQuestion([...question, { question: '', questionType: '', answer: [{ isCorrect: false, text: '' }] }])
+        setQuestion([...question, { question: '', questionTypeId: '', answer: [{ isCorrect: false, text: '' }] }])
+    }
+
+    const handleDeleteQuestion = (questionIndex) => {
+        setQuestion(question.filter((_, index) => index !== questionIndex))
     }
 
     const handleAddAnswer = (questionIndex) => {
         const updatedQuestions = [...question]
         updatedQuestions[questionIndex].answer.push({ isCorrect: false, text: '' })
         setQuestion(updatedQuestions)
-    }
-
-    const handleDeleteQuestion = (questionIndex) => {
-        setQuestion(question.filter((_, index) => index !== questionIndex))
     }
 
     const handleDeleteAnswer = (questionIndex, answerIndex) => {
@@ -40,17 +47,17 @@ function AddQuizze() {
         setQuizze({ ...quizze, [name]: value })
     }
 
-    const handleChangeQuestionInput = (e, index) => {
+    const handleChangeQuestionInput = (e, questionIndex) => {
         const { value } = e.target
         const updatedQuestions = [...question]
-        updatedQuestions[index].question = value
+        updatedQuestions[questionIndex].question = value
         setQuestion(updatedQuestions)
     }
 
-    const handleChangeQuestionOption = (e, index) => {
+    const handleChangeQuestionOption = (e, questionIndex) => {
         const { value } = e.target
         const updatedQuestions = [...question]
-        updatedQuestions[index].questionType = value
+        updatedQuestions[questionIndex].questionTypeId = value
         setQuestion(updatedQuestions)
     }
 
@@ -61,16 +68,39 @@ function AddQuizze() {
         setQuestion(updatedQuestions)
     }
 
-    const handleChangeCheckbox = (e, questionIndex, answerIndex) => {
+    const handleChangeAnswerOption = (e, questionIndex, answerIndex) => {
+        const { checked } = e.target
         const updatedQuestions = [...question]
-        updatedQuestions[questionIndex].answer[answerIndex].isCorrect = e.target.checked
+        updatedQuestions[questionIndex].answer[answerIndex].isCorrect = checked
         setQuestion(updatedQuestions)
     }
 
-    const handleSubmit = () => {
-        console.log('quizze', quizze)
-        console.log('question', question)
+    const handleSubmit = async () => {
+        console.log('quizze: ', quizze)
+        console.log('question: ', { question, quizzeName: quizze.title })
+        try {
+            const quizzeResponse = await addNewQuizze(quizze)
+            console.log('Quizze submitted: ', quizzeResponse)
+            const questionResponse = await addNewQuestion({ questions: question, quizzeName: quizze.title })
+            console.log('Question submitted: ', questionResponse)
+            navigate('/admin/quizze')
+        } catch (error) {
+            console.log('Submitfailed: ', error)
+        }
     }
+
+    useEffect(() => {
+        const getQuestionTypes = async () => {
+            try {
+                const response = await getQuestionType()
+                setQuestionTypes(response.questionTypes)
+            } catch (error) {
+                console.log('Get question types failed')
+            }
+        }
+
+        getQuestionTypes()
+    }, [])
 
     return (
         <div className={cx('wrapper')}>
@@ -106,28 +136,25 @@ function AddQuizze() {
                                     value={itemQ.question}
                                     onChange={(e) => handleChangeQuestionInput(e, indexQ)}
                                 />
-                                <label htmlFor="questionType">Loại câu hỏi</label>
-                                <select
-                                    name="questionType"
-                                    id="questionType"
-                                    value={itemQ.questionType}
-                                    onChange={(e) => handleChangeQuestionOption(e, indexQ)}
-                                >
-                                    <option value="single">Trắc nghiệm</option>
-                                    <option value="multiple">Nhiều lựa chọn</option>
-                                    <option value="boolean">Đúng/Sai</option>
-                                    <option value="writing">Viết đoạn văn</option>
+                                <label htmlFor="questionTypeId">Loại câu hỏi</label>
+                                <select name="questionTypeId" id="questionTypeId" onChange={(e) => handleChangeQuestionOption(e, indexQ)}>
+                                    <option value="">--Loại câu hỏi--</option>
+                                    {questionTypes?.map((questionType, indexQuestionType) => (
+                                        <option key={indexQuestionType} value={questionType._id}>
+                                            {questionType.type}
+                                        </option>
+                                    ))}
                                 </select>
                                 <button onClick={() => handleDeleteQuestion(indexQ)}>Xoá</button>
                                 <div className={cx('answer-group')}>
                                     {itemQ?.answer.map((itemA, indexA) => (
                                         <div key={indexA} className={cx('answer')}>
-                                            <label htmlFor="answer">Đáp án</label>
+                                            <label htmlFor="text">Đáp án</label>
                                             <input
                                                 type="text"
-                                                id="answer"
-                                                name="answer"
-                                                value={itemA.answer}
+                                                id="text"
+                                                name="text"
+                                                value={itemA.text}
                                                 onChange={(e) => handleChangeAnswerInput(e, indexQ, indexA)}
                                             />
                                             <label htmlFor="isCorrect">Đúng/Sai</label>
@@ -136,7 +163,7 @@ function AddQuizze() {
                                                 id="isCorrect"
                                                 name="isCorrect"
                                                 checked={itemA.isCorrect}
-                                                onChange={(e) => handleChangeCheckbox(e, indexQ, indexA)}
+                                                onChange={(e) => handleChangeAnswerOption(e, indexQ, indexA)}
                                             />
                                             <button onClick={() => handleDeleteAnswer(indexQ, indexA)}>Xoá</button>
                                         </div>

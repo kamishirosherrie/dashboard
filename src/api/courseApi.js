@@ -20,3 +20,13 @@ export const getCourseBySlug = async (slug) => {
         throw error
     }
 }
+
+export const addNewCourse = async (course) => {
+    try {
+        const response = await axios.post(apiUrl.courseUrl.addNewCourse, course)
+        return response.data
+    } catch (error) {
+        console.log('Add new course failed')
+        throw error
+    }
+}

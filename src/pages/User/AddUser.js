@@ -3,6 +3,7 @@ import styles from './AddUser.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useEffect, useState } from 'react'
 import { getRoles } from '../../api/roleApi'
+import { addNewUser } from '../../api/userApi'
 
 const cx = classNames.bind(styles)
 
@@ -12,13 +13,17 @@ function AddUser() {
         userName: '',
         email: '',
         phoneNumber: '',
+        passWord: '',
         roleId: '',
         isDisabled: false,
     })
     const [roles, setRoles] = useState([])
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(formData)
+        const response = await addNewUser(formData)
+        console.log('User submitted: ', response.user)
+        console.log('Message: ', response.message)
     }
 
     const handleChange = (event) => {
@@ -55,6 +60,10 @@ function AddUser() {
                                 <input type="text" name="userName" onChange={handleChange} className={cx('input')} required />
                             </div>
                             <div className={cx('info-group')}>
+                                <label htmlFor="passWord">Password</label>
+                                <input type="password" name="passWord" onChange={handleChange} className={cx('input')} required />
+                            </div>
+                            <div className={cx('info-group')}>
                                 <label htmlFor="email">Email</label>
                                 <input type="text" name="email" onChange={handleChange} className={cx('input')} required />
                             </div>
@@ -64,22 +73,14 @@ function AddUser() {
                             </div>
                             <div className={cx('info-group')}>
                                 <label htmlFor="roleId">Role</label>
-                                <select
-                                    name="roleId"
-                                    id="roleId"
-                                    value={roles[0]?._id ? (formData.roleId = roles[0]._id) : ''}
-                                    onChange={handleChange}
-                                >
+                                <select name="roleId" id="roleId" onChange={handleChange}>
+                                    <option value="">--Chọn vai trò--</option>
                                     {roles.map((role, index) => (
                                         <option value={role._id} key={index}>
                                             {role.roleName}
                                         </option>
                                     ))}
                                 </select>
-                            </div>
-                            <div className={cx('info-group')}>
-                                <label htmlFor="isDisabled">Is disabled?</label>
-                                <input type="checkbox" name="isDisabled" checked={formData.isDisabled} onChange={handleChange} />
                             </div>
                         </div>
 

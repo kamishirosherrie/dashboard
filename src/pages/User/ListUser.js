@@ -28,7 +28,7 @@ function ListUser() {
                 <h1>List User</h1>
                 <Table headings={['Index', 'User', 'Email', 'Role', 'Active', '']}>
                     {users.map((user, index) => (
-                        <tr>
+                        <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{user.fullName}</td>
                             <td>{user.email}</td>

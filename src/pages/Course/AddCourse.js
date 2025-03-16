@@ -2,10 +2,13 @@ import classNames from 'classnames/bind'
 import styles from './AddCourse.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useState } from 'react'
+import { addNewCourse } from '../../api/courseApi'
+import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind(styles)
 
 function AddCourse() {
+    const navigate = useNavigate()
     const [course, setCourse] = useState({
         title: '',
         description: '',
@@ -15,8 +18,15 @@ function AddCourse() {
         const { name, value } = event.target
         setCourse({ ...course, [name]: value })
     }
-    const handleSubmit = () => {
-        console.log('Course: ', course)
+
+    const handleSubmit = async () => {
+        try {
+            const response = await addNewCourse(course)
+            console.log('Course submitted: ', response)
+            navigate('/admin/course')
+        } catch (error) {
+            console.log('Add course failed: ', error)
+        }
     }
 
     return (

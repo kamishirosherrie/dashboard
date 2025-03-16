@@ -10,3 +10,13 @@ export const getAllUsers = async () => {
         throw error
     }
 }
+
+export const addNewUser = async (user) => {
+    try {
+        const response = await axios.post(apiUrl.userUrl.addUser, user)
+        return response.data
+    } catch (error) {
+        console.log('Add new user failed')
+        throw error
+    }
+}
