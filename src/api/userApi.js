@@ -30,3 +30,23 @@ export const addNewUser = async (user) => {
         throw error
     }
 }
+
+export const updateUser = async (user) => {
+    try {
+        const response = await axios.put(apiUrl.userUrl.updateUser, user)
+        return response.data
+    } catch (error) {
+        console.log('Update user failed: ', error)
+        throw error
+    }
+}
+
+export const deleteUser = async (userName) => {
+    try {
+        const response = await axios.put(apiUrl.userUrl.deleteUser(userName))
+        return response.data
+    } catch (error) {
+        console.log('Delete user failed: ', error)
+        throw error
+    }
+}

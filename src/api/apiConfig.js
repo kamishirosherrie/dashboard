@@ -6,8 +6,10 @@ const apiUrl = {
     },
     userUrl: {
         getUser: `${API_BASE_URL}/user`,
-        addUser: `${API_BASE_URL}/user/addUser`,
         getUserInfo: (userName) => `${API_BASE_URL}/user/getUserInfo/${userName}`,
+        addUser: `${API_BASE_URL}/user/addUser`,
+        updateUser: `${API_BASE_URL}/user/updateUserInfo`,
+        deleteUser: (userName) => `${API_BASE_URL}/user/deleteUser/${userName}`,
     },
     courseUrl: {
         getCourse: `${API_BASE_URL}/course`,

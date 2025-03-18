@@ -4,11 +4,31 @@ import { useEffect, useState } from 'react'
 import { getAllLesson } from '../../api/lessonApi'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
+import ModalDelete from '../../components/ModalDelete/ModalDelete'
+import { Link } from 'react-router-dom'
 
 const cx = className.bind(styles)
 
 function ListLesson() {
     const [lessons, setLessons] = useState([])
+    const [lessonId, setLessonId] = useState({})
+    const [isOpen, setIsOpen] = useState(false)
+
+    const handleDelete = (lessonId) => {
+        setIsOpen(true)
+        setLessonId(lessonId)
+    }
+
+    const handleCancel = () => {
+        setIsOpen(false)
+    }
+
+    const handleDeleteLesson = async (lessonId) => {
+        console.log(
+            'Delete lesson: ',
+            lessons.filter((lesson) => lesson._id !== lessonId),
+        )
+    }
 
     useEffect(() => {
         const getLesson = async () => {
@@ -33,13 +53,16 @@ function ListLesson() {
                             <td>{lesson.title}</td>
                             <td>{lesson.courseId.title}</td>
                             <td>
-                                <button>Edit</button>
-                                <button>Delete</button>
+                                <button>
+                                    <Link to={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Link>
+                                </button>
+                                <button onClick={() => handleDelete(lesson._id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
                 </Table>
             </MainAccount>
+            <ModalDelete isOpen={isOpen} handleCancel={handleCancel} handleDelete={() => handleDeleteLesson(lessonId)} />
         </div>
     )
 }

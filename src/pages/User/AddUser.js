@@ -3,11 +3,14 @@ import styles from './AddUser.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useEffect, useState } from 'react'
 import { getRoles } from '../../api/roleApi'
-import { addNewUser } from '../../api/userApi'
+import { addNewUser, getAllUsers } from '../../api/userApi'
+import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind(styles)
 
 function AddUser() {
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         fullName: '',
         userName: '',
@@ -20,15 +23,41 @@ function AddUser() {
     const [roles, setRoles] = useState([])
 
     const handleSubmit = async () => {
-        console.log(formData)
-        const response = await addNewUser(formData)
-        console.log('User submitted: ', response.user)
-        console.log('Message: ', response.message)
+        try {
+            const response = await getAllUsers()
+            const users = response.users
+            const isUserNameExist = users.some((user) => user.userName === formData.userName)
+            const isEmailExist = users.some((user) => user.email === formData.email)
+            const isPhoneNumberExist = users.some((user) => user.phoneNumber === formData.phoneNumber)
+
+            if (isUserNameExist) {
+                alert('Username already exists')
+                return
+            }
+            if (isEmailExist) {
+                alert('Email already exists')
+                return
+            }
+            if (isPhoneNumberExist) {
+                alert('Phone number already exists')
+                return
+            }
+            if (formData.roleId === '') {
+                alert('Please select a role')
+                return
+            }
+
+            const newUser = await addNewUser(formData)
+            navigate('/')
+            console.log('New user: ', newUser)
+        } catch (error) {
+            console.log('Add user failed: ', error)
+        }
     }
 
     const handleChange = (event) => {
-        const { name, value, type, checked } = event.target
-        setFormData((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
+        const { name, value } = event.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
     }
 
     useEffect(() => {

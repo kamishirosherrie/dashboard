@@ -1,15 +1,39 @@
 import { useEffect, useState } from 'react'
-import { getAllUsers } from '../../api/userApi'
+import { Link } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import styles from './ListUser.module.scss'
+
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
-import { Link } from 'react-router-dom'
+import { deleteUser, getAllUsers } from '../../api/userApi'
+import ModalDelete from '../../components/ModalDelete/ModalDelete'
 
 const cx = classNames.bind(styles)
 
 function ListUser() {
     const [users, setUsers] = useState([])
+    const [userName, setUserName] = useState('')
+    const [isOpen, setIsOpen] = useState(false)
+
+    const handleDelete = (userName) => {
+        setIsOpen(true)
+        setUserName(userName)
+    }
+
+    const handleCancel = () => {
+        setIsOpen(false)
+    }
+
+    const handleDeleteUser = async (userName) => {
+        try {
+            const response = await deleteUser(userName)
+            console.log('Delete user: ', response)
+            setUsers(users.map((user) => (user.userName === userName ? { ...user, isDisabled: true } : user)))
+            setIsOpen(false)
+        } catch (error) {
+            console.log('Delete user failed: ', error)
+        }
+    }
 
     useEffect(() => {
         const getUsers = async () => {
@@ -39,12 +63,13 @@ function ListUser() {
                                 <button>
                                     <Link to={`/admin/user/updateUser/${user.userName}`}>Edit</Link>
                                 </button>
-                                <button>Delete</button>
+                                <button onClick={() => handleDelete(user.userName)}>Delete</button>
                             </td>
                         </tr>
                     ))}
                 </Table>
             </div>
+            <ModalDelete isOpen={isOpen} handleCancel={handleCancel} handleDelete={() => handleDeleteUser(userName)} />
         </MainAccount>
     )
 }
