@@ -22,6 +22,23 @@ function Sidebar() {
                     </Link>
                 </div>
                 <div className={cx('navbar-item')}>
+                    <div className={cx('item')}>User</div>
+                    <ul className={cx('dropdown')}>
+                        <li>
+                            <UserSecurityIcon className={cx('icon')} width={24} height={24} />
+                            <Link to="/" className={cx('navbar-link')}>
+                                List User
+                            </Link>
+                        </li>
+                        <li>
+                            <UserSecurityIcon className={cx('icon')} width={24} height={24} />
+                            <Link to="/admin/user/add-user" className={cx('navbar-link')}>
+                                Add User
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+                <div className={cx('navbar-item')}>
                     <div className={cx('item')}>Course</div>
                     <ul className={cx('dropdown')}>
                         <li>
@@ -68,23 +85,6 @@ function Sidebar() {
                             <UserSecurityIcon className={cx('icon')} width={24} height={24} />
                             <Link to="/admin/quizze/add-quizze" className={cx('navbar-link')}>
                                 Add Quizze
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-                <div className={cx('navbar-item')}>
-                    <div className={cx('item')}>User</div>
-                    <ul className={cx('dropdown')}>
-                        <li>
-                            <UserSecurityIcon className={cx('icon')} width={24} height={24} />
-                            <Link to="/" className={cx('navbar-link')}>
-                                List User
-                            </Link>
-                        </li>
-                        <li>
-                            <UserSecurityIcon className={cx('icon')} width={24} height={24} />
-                            <Link to="/admin/user/add-user" className={cx('navbar-link')}>
-                                Add User
                             </Link>
                         </li>
                     </ul>

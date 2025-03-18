@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react'
+import { getAllUsers } from '../../api/userApi'
 import classNames from 'classnames/bind'
 import styles from './ListUser.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
-import { useEffect, useState } from 'react'
-import { getAllUsers } from '../../api/userApi'
 import Table from '../../components/Table/Table'
+import { Link } from 'react-router-dom'
 
 const cx = classNames.bind(styles)
 
@@ -35,7 +36,9 @@ function ListUser() {
                             <td>{user.roleId.roleName}</td>
                             <td>{user.isDisabled === true ? 'No' : 'Yes'}</td>
                             <td>
-                                <button>Edit</button>
+                                <button>
+                                    <Link to={`/admin/user/updateUser/${user.userName}`}>Edit</Link>
+                                </button>
                                 <button>Delete</button>
                             </td>
                         </tr>
