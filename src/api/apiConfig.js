@@ -1,6 +1,10 @@
 const API_BASE_URL = 'http://localhost:8017'
 
 const apiUrl = {
+    authUrl: {
+        login: `${API_BASE_URL}/auth/login`,
+        register: `${API_BASE_URL}/auth/register`,
+    },
     roleUrl: {
         getRole: `${API_BASE_URL}/role`,
     },
