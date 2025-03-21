@@ -48,6 +48,7 @@ function AddUser() {
             }
 
             const newUser = await addNewUser(formData)
+            alert('Add user successfully')
             navigate('/')
             console.log('New user: ', newUser)
         } catch (error) {

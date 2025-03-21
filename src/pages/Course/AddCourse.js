@@ -22,6 +22,7 @@ function AddCourse() {
     const handleSubmit = async () => {
         try {
             const response = await addNewCourse(course)
+            alert('Add course successfully')
             console.log('Course submitted: ', response)
             navigate('/admin/course')
         } catch (error) {

@@ -26,7 +26,7 @@ function Sidebar() {
                     <ul className={cx('dropdown')}>
                         <li>
                             <UserSecurityIcon className={cx('icon')} width={24} height={24} />
-                            <Link to="/" className={cx('navbar-link')}>
+                            <Link to="/admin/user" className={cx('navbar-link')}>
                                 List User
                             </Link>
                         </li>

@@ -38,7 +38,8 @@ function UpdateUser() {
                 return
             }
             await updateUser(user)
-            navigate('/')
+            alert('Update user successfully')
+            navigate('/admin/user')
         } catch (error) {
             console.log('Update user failed: ', error)
         }

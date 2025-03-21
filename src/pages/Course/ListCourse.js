@@ -3,7 +3,7 @@ import styles from './ListCourse.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
 import { useEffect, useState } from 'react'
-import { getCourse } from '../../api/courseApi'
+import { deleteCourse, getCourse } from '../../api/courseApi'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
 import { Link } from 'react-router-dom'
 
@@ -24,10 +24,9 @@ function ListCourse() {
     }
 
     const handleDeleteCourse = async (courseId) => {
-        console.log(
-            'Delete course: ',
-            courses.filter((course) => course._id !== courseId),
-        )
+        await deleteCourse(courseId)
+        setIsOpen(false)
+        setCourses(courses.filter((course) => course._id !== courseId))
     }
 
     useEffect(() => {

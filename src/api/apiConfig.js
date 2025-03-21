@@ -19,6 +19,8 @@ const apiUrl = {
         getCourse: `${API_BASE_URL}/course`,
         getCourseBySlug: (slug) => `${API_BASE_URL}/course/slug/${slug}`,
         addNewCourse: `${API_BASE_URL}/course/addCourse`,
+        updateCourse: `${API_BASE_URL}/course/updateCourse`,
+        deleteCourse: (id) => `${API_BASE_URL}/course/deleteCourse/${id}`,
     },
     lessonUrl: {
         addNewLesson: `${API_BASE_URL}/lesson/addNewLesson`,
