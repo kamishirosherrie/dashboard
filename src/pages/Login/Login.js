@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from './Login.module.scss'
 import { useNavigate } from 'react-router-dom'
-import { login } from '../../api/authApi'
+import { loginUser } from '../../api/authApi'
 import AuthContext from '../../context/AuthContext'
 
 const cx = classNames.bind(styles)
 
 function Login() {
     const navigate = useNavigate()
-    const isAuthenticated = localStorage.getItem('user')
     const { login } = useContext(AuthContext)
 
     const [user, setUser] = useState({})
@@ -24,7 +23,7 @@ function Login() {
             event.preventDefault()
             if (user.userName && user.passWord) {
                 login(user)
-                await login(user)
+                await loginUser(user)
                 navigate('/admin/user')
             } else {
                 alert('Please enter username and password')
@@ -33,12 +32,6 @@ function Login() {
             console.log('Login failed: ', error.message)
         }
     }
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/admin/user')
-        }
-    }, [isAuthenticated])
 
     return (
         <div className={cx('wrapper')}>

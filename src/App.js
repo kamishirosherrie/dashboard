@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import AddLesson from './pages/Lesson/AddLesson'
 import ListLesson from './pages/Lesson/ListLesson'
 import ListQuizze from './pages/Quizze/ListQuizze'
@@ -14,7 +14,6 @@ import UpdateQuizze from './pages/Quizze/UpdateQuizze'
 import Login from './pages/Login/Login'
 import { useContext } from 'react'
 import AuthContext from './context/AuthContext'
-import ProctectedRoute from './routes/ProtectedRoute'
 
 function App() {
     const { user } = useContext(AuthContext)
@@ -24,105 +23,21 @@ function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
 
-                <Route
-                    path="/admin/user"
-                    element={
-                        <ProctectedRoute>
-                            <ListUser />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/user/add-user"
-                    element={
-                        <ProctectedRoute>
-                            <AddUser />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/user/updateUser/:userName"
-                    element={
-                        <ProctectedRoute>
-                            <UpdateUser />
-                        </ProctectedRoute>
-                    }
-                />
+                <Route path="/admin/user" element={user ? <ListUser /> : <Navigate to="/login" />} />
+                <Route path="/admin/user/add-user" element={user ? <AddUser /> : <Navigate to="/login" />} />
+                <Route path="/admin/user/updateUser/:userName" element={user ? <UpdateUser /> : <Navigate to="/login" />} />
 
-                <Route
-                    path="/admin/course"
-                    element={
-                        <ProctectedRoute>
-                            <ListCourse />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/course/add-course"
-                    element={
-                        <ProctectedRoute>
-                            <AddCourse />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/course/update-course/:slug"
-                    element={
-                        <ProctectedRoute>
-                            <UpdateCourse />
-                        </ProctectedRoute>
-                    }
-                />
+                <Route path="/admin/course" element={user ? <ListCourse /> : <Navigate to="/login" />} />
+                <Route path="/admin/course/add-course" element={user ? <AddCourse /> : <Navigate to="/login" />} />
+                <Route path="/admin/course/update-course/:slug" element={user ? <UpdateCourse /> : <Navigate to="/login" />} />
 
-                <Route
-                    path="/admin/lesson"
-                    element={
-                        <ProctectedRoute>
-                            <ListLesson />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/lesson/add-lesson"
-                    element={
-                        <ProctectedRoute>
-                            <AddLesson />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/lesson/update-lesson/:slug"
-                    element={
-                        <ProctectedRoute>
-                            <UpdateLesson />
-                        </ProctectedRoute>
-                    }
-                />
+                <Route path="/admin/lesson" element={user ? <ListLesson /> : <Navigate to="/login" />} />
+                <Route path="/admin/lesson/add-lesson" element={user ? <AddLesson /> : <Navigate to="/login" />} />
+                <Route path="/admin/lesson/update-lesson/:slug" element={user ? <UpdateLesson /> : <Navigate to="/login" />} />
 
-                <Route
-                    path="/admin/quizze"
-                    element={
-                        <ProctectedRoute>
-                            <ListQuizze />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/quizze/add-quizze"
-                    element={
-                        <ProctectedRoute>
-                            <AddQuizze />
-                        </ProctectedRoute>
-                    }
-                />
-                <Route
-                    path="/admin/quizze/update-quizze/:slug"
-                    element={
-                        <ProctectedRoute>
-                            <UpdateQuizze />
-                        </ProctectedRoute>
-                    }
-                />
+                <Route path="/admin/quizze" element={user ? <ListQuizze /> : <Navigate to="/login" />} />
+                <Route path="/admin/quizze/add-quizze" element={user ? <AddQuizze /> : <Navigate to="/login" />} />
+                <Route path="/admin/quizze/update-quizze/:slug" element={user ? <UpdateQuizze /> : <Navigate to="/login" />} />
             </Routes>
         </Router>
     )
