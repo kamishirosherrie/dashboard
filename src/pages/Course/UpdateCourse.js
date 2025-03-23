@@ -17,7 +17,7 @@ function UpdateCourse() {
     })
     const handleChange = (event) => {
         const { name, value } = event.target
-        setCourse({ ...course, [name]: value })
+        setCourse((prev) => ({ ...prev, [name]: value }))
     }
 
     const handleSubmit = async () => {

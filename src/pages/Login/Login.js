@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from './Login.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../api/authApi'
+import AuthContext from '../../context/AuthContext'
 
 const cx = classNames.bind(styles)
 
 function Login() {
     const navigate = useNavigate()
+    const isAuthenticated = localStorage.getItem('user')
+    const { login } = useContext(AuthContext)
+
     const [user, setUser] = useState({})
 
     const handleChange = (event) => {
@@ -18,15 +22,23 @@ function Login() {
     const handleSubmit = async (event) => {
         try {
             event.preventDefault()
-            console.log('Username: ', user.userName)
-            console.log('Password: ', user.passWord)
-
-            await login(user)
-            navigate('/admin/user')
+            if (user.userName && user.passWord) {
+                login(user)
+                await login(user)
+                navigate('/admin/user')
+            } else {
+                alert('Please enter username and password')
+            }
         } catch (error) {
             console.log('Login failed: ', error.message)
         }
     }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/admin/user')
+        }
+    }, [isAuthenticated])
 
     return (
         <div className={cx('wrapper')}>

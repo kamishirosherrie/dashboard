@@ -91,7 +91,7 @@ function Sidebar() {
                 </div>
                 <div className={cx('navbar-item')}>
                     <UserSecurityIcon className={cx('icon')} width={24} height={24} />
-                    <Link to="/" className={cx('navbar-link')} onClick={handleLogout}>
+                    <Link to="/login" className={cx('navbar-link')} onClick={handleLogout}>
                         Đăng xuất
                     </Link>
                 </div>

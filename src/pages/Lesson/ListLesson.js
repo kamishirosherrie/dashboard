@@ -34,7 +34,7 @@ function ListLesson() {
         const getLesson = async () => {
             try {
                 const response = await getAllLesson()
-                setLessons(response.data.lessons)
+                setLessons(response.lessons)
             } catch (error) {
                 console.log('Get all lesson failed: ', error)
             }
@@ -46,21 +46,25 @@ function ListLesson() {
         <div className={cx('wrapper')}>
             <MainAccount>
                 <h1>List Lessons</h1>
-                <Table headings={['Index', 'Lesson', 'Course', '']}>
-                    {lessons.map((lesson, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{lesson.title}</td>
-                            <td>{lesson.courseId.title}</td>
-                            <td>
-                                <button>
-                                    <Link to={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Link>
-                                </button>
-                                <button onClick={() => handleDelete(lesson._id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </Table>
+                {lessons.length === 0 ? (
+                    <div className={cx('no-data')}>You haven't added any lessons yet.</div>
+                ) : (
+                    <Table headings={['Index', 'Lesson', 'Course', '']}>
+                        {lessons.map((lesson, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{lesson.title}</td>
+                                <td>{lesson.courseId.title}</td>
+                                <td>
+                                    <button>
+                                        <Link to={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Link>
+                                    </button>
+                                    <button onClick={() => handleDelete(lesson._id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </Table>
+                )}
             </MainAccount>
             <ModalDelete isOpen={isOpen} handleCancel={handleCancel} handleDelete={() => handleDeleteLesson(lessonId)} />
         </div>

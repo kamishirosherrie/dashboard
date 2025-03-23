@@ -43,7 +43,7 @@ function AddCourse() {
                             </div>
                             <div className={cx('course-group')}>
                                 <label htmlFor="description">Description</label>
-                                <input type="text" name="description" onChange={handleChange} className={cx('input')} required />
+                                <textarea type="text" name="description" onChange={handleChange} className={cx('textarea')} required />
                             </div>
                         </div>
 

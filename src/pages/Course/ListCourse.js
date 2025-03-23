@@ -45,21 +45,25 @@ function ListCourse() {
         <MainAccount>
             <div className={cx('wrapper')}>
                 <h1>List Course</h1>
-                <Table headings={['Index', 'Course', 'Description', '']}>
-                    {courses.map((course, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{course.title}</td>
-                            <td>{course.description}</td>
-                            <td>
-                                <button>
-                                    <Link to={`/admin/course/update-course/${course.slug}`}>Edit</Link>
-                                </button>
-                                <button onClick={() => handleDelete(course._id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </Table>
+                {courses.length === 0 ? (
+                    <div className={cx('no-data')}>You haven't added any courses yet.</div>
+                ) : (
+                    <Table headings={['Index', 'Course', 'Description', '']}>
+                        {courses.map((course, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{course.title}</td>
+                                <td>{course.description}</td>
+                                <td>
+                                    <button>
+                                        <Link to={`/admin/course/update-course/${course.slug}`}>Edit</Link>
+                                    </button>
+                                    <button onClick={() => handleDelete(course._id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </Table>
+                )}
             </div>
             <ModalDelete isOpen={isOpen} handleCancel={handleCancel} handleDelete={() => handleDeleteCourse(courseId)} />
         </MainAccount>

@@ -45,21 +45,25 @@ function ListQuizze() {
         <MainAccount>
             <div className={cx('wrapper')}>
                 <h1>List Quizze</h1>
-                <Table headings={['Index', 'Quizze', 'Lesson', '']}>
-                    {quizzes.map((quizze, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{quizze.title}</td>
-                            <td>{quizze.lesson.title}</td>
-                            <td>
-                                <button>
-                                    <Link to={`/admin/quizze/update-quizze/${quizze.slug}`}>Edit</Link>
-                                </button>
-                                <button onClick={() => handleDelete(quizze._id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </Table>
+                {quizzes.length === 0 ? (
+                    <div className={cx('no-data')}>You haven't added any quizzes yet.</div>
+                ) : (
+                    <Table headings={['Index', 'Quizze', 'Lesson', '']}>
+                        {quizzes.map((quizze, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{quizze.title}</td>
+                                <td>{quizze.lesson.title}</td>
+                                <td>
+                                    <button>
+                                        <Link to={`/admin/quizze/update-quizze/${quizze.slug}`}>Edit</Link>
+                                    </button>
+                                    <button onClick={() => handleDelete(quizze._id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </Table>
+                )}
             </div>
             <ModalDelete isOpen={isOpen} handleCancel={handleCancel} handleDelete={handleDeleteQuizze(quizzeId)} />
         </MainAccount>

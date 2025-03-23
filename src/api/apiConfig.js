@@ -25,6 +25,8 @@ const apiUrl = {
     lessonUrl: {
         addNewLesson: `${API_BASE_URL}/lesson/addNewLesson`,
         getAllLesson: `${API_BASE_URL}/lesson/`,
+        getLessonBySlug: (slug) => `${API_BASE_URL}/lesson/slug/${slug}`,
+        updateLesson: `${API_BASE_URL}/lesson/updateLesson`,
     },
     quizzeUrl: {
         addNewQuizze: `${API_BASE_URL}/quizze/addNewQuizze`,

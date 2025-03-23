@@ -12,28 +12,117 @@ import UpdateCourse from './pages/Course/UpdateCourse'
 import UpdateLesson from './pages/Lesson/UpdateLesson'
 import UpdateQuizze from './pages/Quizze/UpdateQuizze'
 import Login from './pages/Login/Login'
+import { useContext } from 'react'
+import AuthContext from './context/AuthContext'
+import ProctectedRoute from './routes/ProtectedRoute'
 
 function App() {
+    const { user } = useContext(AuthContext)
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
 
-                <Route path="/admin/user" element={<ListUser />} />
-                <Route path="/admin/user/add-user" element={<AddUser />} />
-                <Route path="/admin/user/updateUser/:userName" element={<UpdateUser />} />
+                <Route
+                    path="/admin/user"
+                    element={
+                        <ProctectedRoute>
+                            <ListUser />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/user/add-user"
+                    element={
+                        <ProctectedRoute>
+                            <AddUser />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/user/updateUser/:userName"
+                    element={
+                        <ProctectedRoute>
+                            <UpdateUser />
+                        </ProctectedRoute>
+                    }
+                />
 
-                <Route path="/admin/course" element={<ListCourse />} />
-                <Route path="/admin/course/add-course" element={<AddCourse />} />
-                <Route path="/admin/course/update-course/:slug" element={<UpdateCourse />} />
+                <Route
+                    path="/admin/course"
+                    element={
+                        <ProctectedRoute>
+                            <ListCourse />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/course/add-course"
+                    element={
+                        <ProctectedRoute>
+                            <AddCourse />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/course/update-course/:slug"
+                    element={
+                        <ProctectedRoute>
+                            <UpdateCourse />
+                        </ProctectedRoute>
+                    }
+                />
 
-                <Route path="/admin/lesson" element={<ListLesson />} />
-                <Route path="/admin/lesson/add-lesson" element={<AddLesson />} />
-                <Route path="/admin/lesson/update-lesson/:slug" element={<UpdateLesson />} />
+                <Route
+                    path="/admin/lesson"
+                    element={
+                        <ProctectedRoute>
+                            <ListLesson />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/lesson/add-lesson"
+                    element={
+                        <ProctectedRoute>
+                            <AddLesson />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/lesson/update-lesson/:slug"
+                    element={
+                        <ProctectedRoute>
+                            <UpdateLesson />
+                        </ProctectedRoute>
+                    }
+                />
 
-                <Route path="/admin/quizze" element={<ListQuizze />} />
-                <Route path="/admin/quizze/add-quizze" element={<AddQuizze />} />
-                <Route path="/admin/quizze/update-quizze/:slug" element={<UpdateQuizze />} />
+                <Route
+                    path="/admin/quizze"
+                    element={
+                        <ProctectedRoute>
+                            <ListQuizze />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/quizze/add-quizze"
+                    element={
+                        <ProctectedRoute>
+                            <AddQuizze />
+                        </ProctectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/quizze/update-quizze/:slug"
+                    element={
+                        <ProctectedRoute>
+                            <UpdateQuizze />
+                        </ProctectedRoute>
+                    }
+                />
             </Routes>
         </Router>
     )

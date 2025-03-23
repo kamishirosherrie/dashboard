@@ -103,8 +103,8 @@ function UpdateUser() {
                             <div className={cx('info-group')}>
                                 <label htmlFor="isDisabled">Active</label>
                                 <select name="isDisabled" value={user.isDisabled} onChange={handleChangeStatus} className={cx('input')} required>
-                                    <option value="true">No</option>
                                     <option value="false">Yes</option>
+                                    <option value="true">No</option>
                                 </select>
                             </div>
                         </div>
