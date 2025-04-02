@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axiosInstance from './axiosInstance'
 import { apiUrl } from './apiConfig'
 
 export const getQuestionByQuizzeSlug = async (slug) => {
     try {
-        const response = await axios.get(apiUrl.questionUrl.getQuestionByQuizzeSlug(slug))
+        const response = await axiosInstance.get(apiUrl.questionUrl.getQuestionByQuizzeSlug(slug))
         return response.data.questions
     } catch (error) {
         console.log('Get question by quizze slug failed')
@@ -13,7 +13,7 @@ export const getQuestionByQuizzeSlug = async (slug) => {
 
 export const addNewQuestion = async (question) => {
     try {
-        const response = await axios.post(apiUrl.questionUrl.addNewQuestion, question)
+        const response = await axiosInstance.post(apiUrl.questionUrl.addNewQuestion, question)
         return response.data
     } catch (error) {
         console.log('Add new question failed')

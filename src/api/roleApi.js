@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axiosInstance from './axiosInstance'
 import { apiUrl } from './apiConfig'
 
 export const getRoles = async () => {
     try {
-        const response = await axios.get(apiUrl.roleUrl.getRole)
+        const response = await axiosInstance.get(apiUrl.roleUrl.getRole)
         return response.data
     } catch (error) {
         console.log('Get all roles failed: ', error)

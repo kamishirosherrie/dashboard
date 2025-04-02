@@ -21,15 +21,15 @@ function Login() {
     const handleSubmit = async (event) => {
         try {
             event.preventDefault()
-            if (user.userName && user.passWord) {
-                login(user)
-                await loginUser(user)
+            if (user.identifier && user.passWord) {
+                const response = await loginUser(user)
+                login({ ...response.user })
                 navigate('/admin/user')
             } else {
                 alert('Please enter username and password')
             }
         } catch (error) {
-            console.log('Login failed: ', error.message)
+            console.log('Login failed: ', error)
         }
     }
 
@@ -38,8 +38,8 @@ function Login() {
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div className={cx('form-group')}>
-                    <label htmlFor="userName">Username</label>
-                    <input type="text" id="userName" name="userName" onChange={handleChange} required />
+                    <label htmlFor="identifier">Username</label>
+                    <input type="text" id="identifier" name="identifier" onChange={handleChange} required />
                 </div>
                 <div className={cx('form-group')}>
                     <label htmlFor="passWord">Password</label>

@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axiosInstance from './axiosInstance'
 import { apiUrl } from './apiConfig'
 
 export const getCourse = async () => {
     try {
-        const response = await axios.get(apiUrl.courseUrl.getCourse)
+        const response = await axiosInstance.get(apiUrl.courseUrl.getCourse)
         return response.data
     } catch (error) {
         console.log('Get course failed: ', error)
@@ -13,7 +13,7 @@ export const getCourse = async () => {
 
 export const getCourseBySlug = async (slug) => {
     try {
-        const response = await axios.get(apiUrl.courseUrl.getCourseBySlug(slug))
+        const response = await axiosInstance.get(apiUrl.courseUrl.getCourseBySlug(slug))
         return response.data.course
     } catch (error) {
         console.log('Get course by slug failed: ', error)
@@ -23,7 +23,7 @@ export const getCourseBySlug = async (slug) => {
 
 export const addNewCourse = async (course) => {
     try {
-        const response = await axios.post(apiUrl.courseUrl.addNewCourse, course)
+        const response = await axiosInstance.post(apiUrl.courseUrl.addNewCourse, course)
         return response.data
     } catch (error) {
         console.log('Add new course failed: ', error)
@@ -33,7 +33,7 @@ export const addNewCourse = async (course) => {
 
 export const updateCourse = async (course) => {
     try {
-        const response = await axios.put(apiUrl.courseUrl.updateCourse, course)
+        const response = await axiosInstance.put(apiUrl.courseUrl.updateCourse, course)
         return response.data
     } catch (error) {
         console.log('Update course failed: ', error)
@@ -43,7 +43,7 @@ export const updateCourse = async (course) => {
 
 export const deleteCourse = async (id) => {
     try {
-        const response = await axios.delete(apiUrl.courseUrl.deleteCourse(id))
+        const response = await axiosInstance.delete(apiUrl.courseUrl.deleteCourse(id))
         return response.data
     } catch (error) {
         console.log('Delete course failed: ', error)

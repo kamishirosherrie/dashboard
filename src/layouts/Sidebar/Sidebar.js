@@ -5,12 +5,14 @@ import AuthContext from '../../context/AuthContext'
 
 import classNames from 'classnames/bind'
 import styles from './Sidebar.module.scss'
+import { logoutUser } from '../../api/authApi'
 
 const cx = classNames.bind(styles)
 
 function Sidebar() {
-    const { logout } = useContext(AuthContext)
-    const handleLogout = () => {
+    const { user, logout } = useContext(AuthContext)
+    const handleLogout = async () => {
+        await logoutUser()
         logout()
     }
     return (
@@ -18,7 +20,7 @@ function Sidebar() {
             <div className={cx('navbar')}>
                 <div className={cx('navbar-item')}>
                     <Link to="#" className={cx('navbar-link')}>
-                        Hello Sherrie!
+                        Hello {user?.fullName}!
                     </Link>
                 </div>
                 <div className={cx('navbar-item')}>

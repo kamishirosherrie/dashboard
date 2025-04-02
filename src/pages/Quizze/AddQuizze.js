@@ -145,7 +145,7 @@ function AddQuizze() {
                                 <label htmlFor="question">Question</label>
                                 <input
                                     type="text"
-                                    id="question"
+                                    id={indexQ}
                                     name="question"
                                     value={itemQ.question}
                                     onChange={(e) => handleChangeQuestionInput(e, indexQ)}

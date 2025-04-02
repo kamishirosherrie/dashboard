@@ -8,17 +8,20 @@ import { addNewLesson } from '../../api/lessonApi'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useNavigate } from 'react-router-dom'
 import { getCourse } from '../../api/courseApi'
+import { getChapters } from '../../api/chapterApi'
 
 const cx = classNames.bind(styles)
 
 function AddLesson() {
     const navigate = useNavigate()
     const [courses, setCourses] = useState([])
+    const [chapters, setChapters] = useState([])
+
     const [lesson, setLesson] = useState({
         title: '',
-        videoUrl: '',
+        chapterId: '',
         content: '',
-        courseName: '',
+        courseId: '',
     })
 
     const handleChange = (e) => {
@@ -27,6 +30,12 @@ function AddLesson() {
     }
 
     const handleChangeCourse = (e) => {
+        const { name, value } = e.target
+        setLesson({ ...lesson, [name]: value })
+        setChapters(chapters.filter((chapter) => chapter.courseId !== value))
+    }
+
+    const handleChangeChapter = (e) => {
         const { name, value } = e.target
         setLesson({ ...lesson, [name]: value })
     }
@@ -49,28 +58,46 @@ function AddLesson() {
     }
 
     useEffect(() => {
-        const getAllCourse = async () => {
+        const getAllCourses = async () => {
             const response = await getCourse()
             setCourses(response.courses)
         }
-        getAllCourse()
-    })
+
+        const getAllChapters = async () => {
+            const response = await getChapters()
+            setChapters(response.chapters)
+        }
+        getAllCourses()
+        getAllChapters()
+    }, [])
 
     return (
         <div className={cx('wrapper')}>
             <MainAccount>
                 <h1>Thêm bài học</h1>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="title" placeholder="Tiêu đề" value={lesson.title} onChange={handleChange} required />
-                    <input type="text" name="videoUrl" placeholder="URL Video" value={lesson.videoUrl} onChange={handleChange} />
-                    <select name="courseName" value={lesson.courseName} onChange={handleChangeCourse} required>
-                        <option value="">Select a course</option>
+                    <label htmlFor="courseId">Khóa học</label>
+                    <select name="courseId" value={lesson.courseId} onChange={handleChangeCourse} required>
+                        <option value="">Chọn khóa học</option>
                         {courses.map((course) => (
-                            <option key={course._id} value={course.title}>
+                            <option key={course._id} value={course._id}>
                                 {course.title}
                             </option>
                         ))}
                     </select>
+
+                    <label htmlFor="chapterId">Chương</label>
+                    <select name="chapterId" value={lesson.chapterId} onChange={handleChangeChapter} required>
+                        <option value="">Chọn chương</option>
+                        {chapters.map((chapter) => (
+                            <option key={chapter._id} value={chapter?._id}>
+                                {chapter.title}
+                            </option>
+                        ))}
+                    </select>
+
+                    <label htmlFor="title">Tiêu đề</label>
+                    <input type="text" name="title" placeholder="Tiêu đề" value={lesson.title} onChange={handleChange} required />
 
                     <h3>Nội dung bài học</h3>
                     <ReactQuill theme="snow" value={lesson.content} onChange={handleChangeContent} />

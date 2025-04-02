@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axiosInstance from './axiosInstance'
 import { apiUrl } from './apiConfig'
 
 export const getWord = async (word) => {
     try {
-        const response = await axios.get(apiUrl.dictionaryUrl.getWord(word))
+        const response = await axiosInstance.get(apiUrl.dictionaryUrl.getWord(word))
         return response
     } catch (error) {
         console.log('Get word failed')

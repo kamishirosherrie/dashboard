@@ -49,12 +49,15 @@ function ListLesson() {
                 {lessons.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any lessons yet.</div>
                 ) : (
-                    <Table headings={['Index', 'Lesson', 'Course', '']}>
+                    <Table headings={['Order', 'Lesson', 'Chapter', 'Course', '']}>
                         {lessons.map((lesson, index) => (
                             <tr key={index}>
-                                <td>{index + 1}</td>
+                                <td>{lesson.order}</td>
                                 <td>{lesson.title}</td>
-                                <td>{lesson.courseId.title}</td>
+                                <td>
+                                    {lesson.chapterId?.order} - {lesson.chapterId?.title}
+                                </td>
+                                <td>{lesson.chapterId?.courseId.title}</td>
                                 <td>
                                     <button>
                                         <Link to={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Link>

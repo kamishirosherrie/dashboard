@@ -1,49 +1,54 @@
-const API_BASE_URL = 'http://localhost:8017'
-
 const apiUrl = {
     authUrl: {
-        login: `${API_BASE_URL}/auth/login`,
-        register: `${API_BASE_URL}/auth/register`,
+        login: `/auth/login`,
+        register: `/auth/register`,
+        logout: `/auth/logout`,
     },
     roleUrl: {
-        getRole: `${API_BASE_URL}/role`,
+        getRole: `/role`,
     },
     userUrl: {
-        getUser: `${API_BASE_URL}/user`,
-        getUserInfo: (userName) => `${API_BASE_URL}/user/getUserInfo/${userName}`,
-        addUser: `${API_BASE_URL}/user/addUser`,
-        updateUser: `${API_BASE_URL}/user/updateUserInfo`,
-        deleteUser: (userName) => `${API_BASE_URL}/user/deleteUser/${userName}`,
+        getUser: `/user`,
+        getUserInfo: (userName) => `/user/getUserInfo/${userName}`,
+        addUser: `/user/addUser`,
+        updateUser: `/user/updateUserInfo`,
+        deleteUser: (userName) => `/user/deleteUser/${userName}`,
     },
     courseUrl: {
-        getCourse: `${API_BASE_URL}/course`,
-        getCourseBySlug: (slug) => `${API_BASE_URL}/course/slug/${slug}`,
-        addNewCourse: `${API_BASE_URL}/course/addCourse`,
-        updateCourse: `${API_BASE_URL}/course/updateCourse`,
-        deleteCourse: (id) => `${API_BASE_URL}/course/deleteCourse/${id}`,
+        getCourse: `/course`,
+        getCourseBySlug: (slug) => `/course/slug/${slug}`,
+        addNewCourse: `/course/addCourse`,
+        updateCourse: `/course/updateCourse`,
+        deleteCourse: (id) => `/course/deleteCourse/${id}`,
+    },
+    chapterUrl: {
+        getChapters: `/chapter`,
+        getChapterById: (id) => `/chapter/${id}`,
+        addNewChapter: `/chapter/addNewChapter`,
     },
     lessonUrl: {
-        addNewLesson: `${API_BASE_URL}/lesson/addNewLesson`,
-        getAllLesson: `${API_BASE_URL}/lesson/`,
-        getLessonBySlug: (slug) => `${API_BASE_URL}/lesson/slug/${slug}`,
-        updateLesson: `${API_BASE_URL}/lesson/updateLesson`,
+        addNewLesson: `/lesson/addNewLesson`,
+        getAllLesson: `/lesson/`,
+        getLessonBySlug: (slug) => `/lesson/slug/${slug}`,
+        getLessonById: (id) => `/lesson/id/${id}`,
+        updateLesson: `/lesson/updateLesson`,
     },
     quizzeUrl: {
-        addNewQuizze: `${API_BASE_URL}/quizze/addNewQuizze`,
-        getQuizzesWithQuestions: `${API_BASE_URL}/quizze/getQuizzesWithQuestions`,
-        getQuizzeBySlug: (quizzeSlug) => `${API_BASE_URL}/quizze/getQuizzeBySlug/${quizzeSlug}`,
-        getQuizzeByLessonSlug: (lessonSlug) => `${API_BASE_URL}/quizze/getQuizzeByLessonSlug/${lessonSlug}`,
+        addNewQuizze: `/quizze/addNewQuizze`,
+        getQuizzesWithQuestions: `/quizze/getQuizzesWithQuestions`,
+        getQuizzeBySlug: (quizzeSlug) => `/quizze/getQuizzeBySlug/${quizzeSlug}`,
+        getQuizzeByLessonSlug: (lessonSlug) => `/quizze/getQuizzeByLessonSlug/${lessonSlug}`,
     },
     questionUrl: {
-        getQuestionByQuizzeSlug: (quizzeSlug) => `${API_BASE_URL}/question/getQuestionByQuizzeSlug/${quizzeSlug}`,
-        addNewQuestion: `${API_BASE_URL}/question/addNewQuestion`,
+        getQuestionByQuizzeSlug: (quizzeSlug) => `/question/slug/${quizzeSlug}`,
+        addNewQuestion: `/question/addNewQuestion`,
     },
     questionTypeUrl: {
-        getQuestionType: `${API_BASE_URL}/questionType/`,
+        getQuestionType: `/questionType/`,
     },
     dictionaryUrl: {
         getWord: (word) => `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`,
     },
 }
 
-export { API_BASE_URL, apiUrl }
+export { apiUrl }
