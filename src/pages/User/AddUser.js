@@ -49,7 +49,7 @@ function AddUser() {
 
             const newUser = await addNewUser(formData)
             alert('Add user successfully')
-            navigate('/')
+            navigate('/admin/user')
             console.log('New user: ', newUser)
         } catch (error) {
             console.log('Add user failed: ', error)

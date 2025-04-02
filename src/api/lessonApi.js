@@ -50,3 +50,13 @@ export const updateLesson = async (lesson) => {
         throw error
     }
 }
+
+export const deleteLesson = async (id) => {
+    try {
+        const response = await axiosInstance.delete(apiUrl.lessonUrl.deleteLesson(id))
+        return response.data
+    } catch (error) {
+        console.log('Delete lesson failed')
+        throw error
+    }
+}

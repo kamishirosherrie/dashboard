@@ -1,7 +1,7 @@
 import className from 'classnames/bind'
 import styles from './ListLesson.module.scss'
 import { useEffect, useState } from 'react'
-import { getAllLesson } from '../../api/lessonApi'
+import { deleteLesson, getAllLesson } from '../../api/lessonApi'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
@@ -24,10 +24,14 @@ function ListLesson() {
     }
 
     const handleDeleteLesson = async (lessonId) => {
-        console.log(
-            'Delete lesson: ',
-            lessons.filter((lesson) => lesson._id !== lessonId),
-        )
+        try {
+            const response = await deleteLesson(lessonId)
+            console.log('Delete lesson: ', response)
+            setLessons(lessons.filter((lesson) => lesson._id !== lessonId))
+            setIsOpen(false)
+        } catch (error) {
+            console.log('Delete lesson failed: ', error)
+        }
     }
 
     useEffect(() => {

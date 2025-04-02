@@ -32,6 +32,7 @@ const apiUrl = {
         getLessonBySlug: (slug) => `/lesson/slug/${slug}`,
         getLessonById: (id) => `/lesson/id/${id}`,
         updateLesson: `/lesson/updateLesson`,
+        deleteLesson: (id) => `/lesson/deleteLesson/${id}`,
     },
     quizzeUrl: {
         addNewQuizze: `/quizze/addNewQuizze`,

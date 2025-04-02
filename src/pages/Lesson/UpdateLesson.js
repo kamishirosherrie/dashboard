@@ -23,7 +23,6 @@ function UpdateLesson() {
         order: '',
         chapterId: '',
         content: '',
-        courseId: '',
     })
 
     const handleChange = (e) => {
@@ -83,7 +82,7 @@ function UpdateLesson() {
                 <h1>Update Lesson</h1>
                 <div className={cx('container')}>
                     <label htmlFor="courseId">Khóa học</label>
-                    <select name="courseId" value={lesson.courseId} onChange={handleChangeCourse} required>
+                    <select name="courseId" onChange={handleChangeCourse} required>
                         {courses.map((course) => (
                             <option key={course._id} value={course._id}>
                                 {course.title}

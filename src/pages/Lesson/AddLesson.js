@@ -14,14 +14,15 @@ const cx = classNames.bind(styles)
 
 function AddLesson() {
     const navigate = useNavigate()
-    const [courses, setCourses] = useState([])
-    const [chapters, setChapters] = useState([])
 
+    const [courses, setCourses] = useState([])
+    const [allChapters, setAllChapters] = useState([])
+    const [chapters, setChapters] = useState([])
     const [lesson, setLesson] = useState({
         title: '',
+        order: '',
         chapterId: '',
         content: '',
-        courseId: '',
     })
 
     const handleChange = (e) => {
@@ -30,9 +31,15 @@ function AddLesson() {
     }
 
     const handleChangeCourse = (e) => {
-        const { name, value } = e.target
-        setLesson({ ...lesson, [name]: value })
-        setChapters(chapters.filter((chapter) => chapter.courseId !== value))
+        const { value } = e.target
+        console.log('course: ', value)
+        console.log(
+            'chapters: ',
+            allChapters.filter((chapter) => chapter.courseId._id === value),
+        )
+
+        const filteredChapters = allChapters.filter((chapter) => chapter.courseId._id === value)
+        setChapters(filteredChapters)
     }
 
     const handleChangeChapter = (e) => {
@@ -65,7 +72,7 @@ function AddLesson() {
 
         const getAllChapters = async () => {
             const response = await getChapters()
-            setChapters(response.chapters)
+            setAllChapters(response.chapters)
         }
         getAllCourses()
         getAllChapters()
@@ -77,8 +84,8 @@ function AddLesson() {
                 <h1>Thêm bài học</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="courseId">Khóa học</label>
-                    <select name="courseId" value={lesson.courseId} onChange={handleChangeCourse} required>
-                        <option value="">Chọn khóa học</option>
+                    <select name="courseId" onChange={handleChangeCourse} required>
+                        <option value="">-- Chọn khóa học --</option>
                         {courses.map((course) => (
                             <option key={course._id} value={course._id}>
                                 {course.title}
@@ -88,10 +95,10 @@ function AddLesson() {
 
                     <label htmlFor="chapterId">Chương</label>
                     <select name="chapterId" value={lesson.chapterId} onChange={handleChangeChapter} required>
-                        <option value="">Chọn chương</option>
+                        <option value="">-- Chọn chương --</option>
                         {chapters.map((chapter) => (
                             <option key={chapter._id} value={chapter?._id}>
-                                {chapter.title}
+                                Chương {chapter?.order}: {chapter?.title}
                             </option>
                         ))}
                     </select>
