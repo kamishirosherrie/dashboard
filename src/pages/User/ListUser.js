@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import styles from './ListUser.module.scss'
 
@@ -7,6 +6,7 @@ import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
 import { deleteUser, getAllUsers } from '../../api/userApi'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -51,7 +51,7 @@ function ListUser() {
         <MainAccount>
             <div className={cx('wrapper')}>
                 <h1>List User</h1>
-                <Table headings={['Index', 'User', 'Email', 'Role', 'Active', '']}>
+                <Table headings={['Index', 'User', 'Email', 'Role', 'Active']}>
                     {users.map((user, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
@@ -60,10 +60,8 @@ function ListUser() {
                             <td>{user.roleId.roleName}</td>
                             <td>{user.isDisabled === true ? 'No' : 'Yes'}</td>
                             <td>
-                                <button>
-                                    <Link to={`/admin/user/updateUser/${user.userName}`}>Edit</Link>
-                                </button>
-                                <button onClick={() => handleDelete(user.userName)}>Delete</button>
+                                <Button href={`/admin/user/updateUser/${user.userName}`}>Edit</Button>
+                                <Button onClick={() => handleDelete(user.userName)}>Delete</Button>
                             </td>
                         </tr>
                     ))}

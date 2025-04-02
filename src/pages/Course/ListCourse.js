@@ -1,11 +1,12 @@
 import classNames from 'classnames/bind'
 import styles from './ListCourse.module.scss'
+import { useEffect, useState } from 'react'
+
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
-import { useEffect, useState } from 'react'
 import { deleteCourse, getCourse } from '../../api/courseApi'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
-import { Link } from 'react-router-dom'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -48,17 +49,20 @@ function ListCourse() {
                 {courses.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any courses yet.</div>
                 ) : (
-                    <Table headings={['Index', 'Course', 'Description', '']}>
+                    <Table headings={['Index', 'Course', 'Description']}>
                         {courses.map((course, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{course.title}</td>
                                 <td>{course.description}</td>
                                 <td>
-                                    <button>
-                                        <Link to={`/admin/course/update-course/${course.slug}`}>Edit</Link>
-                                    </button>
-                                    <button onClick={() => handleDelete(course._id)}>Delete</button>
+                                    <Button editBtn href={`/admin/course/update-course/${course.slug}`}>
+                                        Edit
+                                    </Button>
+
+                                    <Button deleteBtn onClick={() => handleDelete(course._id)}>
+                                        Delete
+                                    </Button>
                                 </td>
                             </tr>
                         ))}

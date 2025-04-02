@@ -39,6 +39,7 @@ const apiUrl = {
         getQuizzesWithQuestions: `/quizze/getQuizzesWithQuestions`,
         getQuizzeBySlug: (quizzeSlug) => `/quizze/getQuizzeBySlug/${quizzeSlug}`,
         getQuizzeByLessonSlug: (lessonSlug) => `/quizze/getQuizzeByLessonSlug/${lessonSlug}`,
+        deleteQuizze: (id) => `/quizze/deleteQuizze/${id}`,
     },
     questionUrl: {
         getQuestionByQuizzeSlug: (quizzeSlug) => `/question/slug/${quizzeSlug}`,

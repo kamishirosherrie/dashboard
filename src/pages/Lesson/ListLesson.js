@@ -5,7 +5,7 @@ import { deleteLesson, getAllLesson } from '../../api/lessonApi'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
-import { Link } from 'react-router-dom'
+import Button from '../../components/Button/Button'
 
 const cx = className.bind(styles)
 
@@ -53,7 +53,7 @@ function ListLesson() {
                 {lessons.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any lessons yet.</div>
                 ) : (
-                    <Table headings={['Order', 'Lesson', 'Chapter', 'Course', '']}>
+                    <Table headings={['Order', 'Lesson', 'Chapter', 'Course']}>
                         {lessons.map((lesson, index) => (
                             <tr key={index}>
                                 <td>{lesson.order}</td>
@@ -63,10 +63,8 @@ function ListLesson() {
                                 </td>
                                 <td>{lesson.chapterId?.courseId.title}</td>
                                 <td>
-                                    <button>
-                                        <Link to={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Link>
-                                    </button>
-                                    <button onClick={() => handleDelete(lesson._id)}>Delete</button>
+                                    <Button href={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Button>
+                                    <Button onClick={() => handleDelete(lesson._id)}>Delete</Button>
                                 </td>
                             </tr>
                         ))}

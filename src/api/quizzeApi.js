@@ -40,3 +40,13 @@ export const addNewQuizze = async (quizze) => {
         throw error
     }
 }
+
+export const deleteQuizze = async (id) => {
+    try {
+        const response = await axiosInstance.delete(apiUrl.quizzeUrl.deleteQuizze(id))
+        return response.data
+    } catch (error) {
+        console.log('Delete quizze failed')
+        throw error
+    }
+}

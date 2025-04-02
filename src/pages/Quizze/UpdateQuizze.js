@@ -4,16 +4,13 @@ import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getQuizzeBySlug } from '../../api/quizzeApi'
-import { getQuestionType } from '../../api/questionTypeApi'
-import { getLessonById } from '../../api/lessonApi'
 import { getQuestionByQuizzeSlug } from '../../api/questionApi'
+import { getQuestionType } from '../../api/questionTypeApi'
 
 const cx = classNames.bind(styles)
 
 function UpdateQuizze() {
     const { slug } = useParams()
-
-    const [lesson, setLesson] = useState({})
 
     const [quizze, setQuizze] = useState({})
 
@@ -77,20 +74,27 @@ function UpdateQuizze() {
     const handleSubmit = () => {}
 
     useEffect(() => {
-        const getQuestions = async () => {
+        const getQuizze = async () => {
             try {
-                const response = await getQuestionByQuizzeSlug(slug)
+                const response = await getQuizzeBySlug(slug)
                 if (response) {
-                    const lesson = await getLessonById(response[0].quizzeId.lessonId)
-                    setLesson(lesson.lesson)
-                    setQuestions(response)
+                    const questions = await getQuestionByQuizzeSlug(slug)
+                    const questionTypes = await getQuestionType()
+
+                    setQuizze(response)
+                    setQuestions(questions)
+                    setQuestionTypes(questionTypes)
+
+                    console.log(response)
+                    console.log(questions)
+                    console.log(questionTypes)
                 }
             } catch (error) {
                 console.log(error)
             }
         }
 
-        getQuestions()
+        getQuizze()
     }, [slug])
 
     return (
@@ -101,25 +105,19 @@ function UpdateQuizze() {
                     <div className={cx('quizze')}>
                         <div className={cx('quizze-group')}>
                             <label htmlFor="lessonName">Lesson name</label>
-                            <input type="text" id="lessonName" name="lessonName" value={lesson.title} readOnly />
+                            <input type="text" id="lessonName" name="lessonName" value={quizze.lessonId?.title} readOnly />
                         </div>
                         <div className={cx('quizze-group')}>
                             <label htmlFor="title">Quizze title</label>
-                            <input type="text" id="title" name="title" value={questions[0]?.quizzeId.title} onChange={handleChangeQuizzeInput} />
+                            <input type="text" id="title" name="title" value={quizze.title} onChange={handleChangeQuizzeInput} />
                         </div>
                         <div className={cx('quizze-group')}>
                             <label htmlFor="description">Description</label>
-                            <input
-                                type="text"
-                                id="description"
-                                name="description"
-                                value={questions[0]?.quizzeId.description}
-                                onChange={handleChangeQuizzeInput}
-                            />
+                            <input type="text" id="description" name="description" value={quizze.description} onChange={handleChangeQuizzeInput} />
                         </div>
                         <div className={cx('quizze-group')}>
                             <label htmlFor="time">Time for test</label>
-                            <input type="text" id="time" name="time" value={questions[0]?.quizzeId.time} onChange={handleChangeQuizzeInput} />
+                            <input type="text" id="time" name="time" value={quizze.time} onChange={handleChangeQuizzeInput} />
                         </div>
                     </div>
 
@@ -136,13 +134,48 @@ function UpdateQuizze() {
                                         onChange={(e) => handleChangeQuestionInput(e, questionIndex)}
                                     />
                                 </div>
-                                <div className={cx('question-option')}>
-                                    <label htmlFor={`questionType-${questionIndex}`}>Question type</label>
+                                <label htmlFor="questionTypeId">Question type</label>
+                                <select
+                                    name="questionTypeId"
+                                    id="questionTypeId"
+                                    value={question.questionTypeId._id}
+                                    onChange={(e) => handleChangeQuestionOption(e, questionIndex)}
+                                >
+                                    {questionTypes.map((questionType, indexQuestionType) => (
+                                        <option key={indexQuestionType} value={questionType._id}>
+                                            {questionType.type}
+                                        </option>
+                                    ))}
+                                </select>
+                                <button onClick={() => handleDeleteQuestion(questionIndex)}>Delete</button>
+                                <div className={cx('answer-group')}>
+                                    {question?.answer.map((itemA, answerIndex) => (
+                                        <div key={answerIndex} className={cx('answer')}>
+                                            <label htmlFor="text">Answer</label>
+                                            <input
+                                                type="text"
+                                                id="text"
+                                                name="text"
+                                                value={itemA.text}
+                                                onChange={(e) => handleChangeAnswerInput(e, questionIndex, answerIndex)}
+                                            />
+                                            <label htmlFor="isCorrect">Đúng/Sai</label>
+                                            <input
+                                                type="checkbox"
+                                                id="isCorrect"
+                                                name="isCorrect"
+                                                checked={itemA.isCorrect}
+                                                onChange={(e) => handleChangeAnswerOption(e, questionIndex, answerIndex)}
+                                            />
+                                            <button onClick={() => handleDeleteAnswer(questionIndex, answerIndex)}>Delete</button>
+                                        </div>
+                                    ))}
+                                    <button onClick={() => handleAddAnswer(questionIndex)}>Add an answer</button>
                                 </div>
                             </div>
                         ))}
+                        <button onClick={handleAddQuestion}>Add a question</button>
                     </div>
-
                     <button type="submit" onClick={handleSubmit}>
                         Save
                     </button>

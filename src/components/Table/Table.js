@@ -12,6 +12,7 @@ function Table({ headings, children }) {
                         {headings.map((heading, index) => (
                             <th key={index}>{heading}</th>
                         ))}
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>{children}</tbody>

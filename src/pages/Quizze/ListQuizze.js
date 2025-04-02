@@ -2,10 +2,10 @@ import classNames from 'classnames/bind'
 import styles from './ListQuizze.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useEffect, useState } from 'react'
-import { getQuizzesWithQuestions } from '../../api/quizzeApi'
+import { deleteQuizze, getQuizzesWithQuestions } from '../../api/quizzeApi'
 import Table from '../../components/Table/Table'
-import { Link } from 'react-router-dom'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -24,10 +24,14 @@ function ListQuizze() {
     }
 
     const handleDeleteQuizze = (quizzeId) => async () => {
-        console.log(
-            'Delete quizze: ',
-            quizzes.filter((quizze) => quizze._id !== quizzeId),
-        )
+        try {
+            const response = await deleteQuizze(quizzeId)
+            console.log('Delete quizze: ', response)
+            setQuizzes(quizzes.filter((quizze) => quizze._id !== quizzeId))
+            setIsOpen(false)
+        } catch (error) {
+            console.log('Delete quizze failed: ', error)
+        }
     }
 
     useEffect(() => {
@@ -48,17 +52,15 @@ function ListQuizze() {
                 {quizzes.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any quizzes yet.</div>
                 ) : (
-                    <Table headings={['Index', 'Quizze', 'Lesson', '']}>
+                    <Table headings={['Index', 'Quizze', 'Lesson']}>
                         {quizzes.map((quizze, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{quizze.title}</td>
                                 <td>{quizze.lesson.title}</td>
                                 <td>
-                                    <button>
-                                        <Link to={`/admin/quizze/update-quizze/${quizze.slug}`}>Edit</Link>
-                                    </button>
-                                    <button onClick={() => handleDelete(quizze._id)}>Delete</button>
+                                    <Button href={`/admin/quizze/update-quizze/${quizze.slug}`}>Edit</Button>
+                                    <Button onClick={() => handleDelete(quizze._id)}>Delete</Button>
                                 </td>
                             </tr>
                         ))}
