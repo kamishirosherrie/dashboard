@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from './AddLesson.module.scss'
+import JoditEditor from 'jodit-react'
+import HTMLReactParser from 'html-react-parser'
 
 import { addNewLesson } from '../../api/lessonApi'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
@@ -9,12 +11,12 @@ import { getCourse } from '../../api/courseApi'
 import { getChapters } from '../../api/chapterApi'
 import { routes } from '../../routes/route'
 import Button from '../../components/Button/Button'
-import Editor from '../../components/Editor/Editor'
 
 const cx = classNames.bind(styles)
 
 function AddLesson() {
     const navigate = useNavigate()
+    const editor = useRef(null)
 
     const [courses, setCourses] = useState([])
     const [allChapters, setAllChapters] = useState([])
@@ -48,9 +50,8 @@ function AddLesson() {
         setLesson({ ...lesson, [name]: value })
     }
 
-    const handleChangeContent = (event, editor) => {
-        const data = editor.getData()
-        setLesson({ ...lesson, content: data })
+    const handleChangeContent = (content) => {
+        setLesson((prev) => ({ ...prev, content: content }))
     }
 
     const handleSubmit = async (e) => {
@@ -109,10 +110,8 @@ function AddLesson() {
                     <input type="text" name="title" placeholder="Tiêu đề" value={lesson.title} onChange={handleChange} required />
 
                     <h3>Nội dung bài học</h3>
-                    <Editor value={lesson.content} onChange={handleChangeContent} />
+                    <JoditEditor ref={editor} value={lesson.content} onChange={(content) => handleChangeContent(content)} />
 
-                    <h3>Preview</h3>
-                    <div dangerouslySetInnerHTML={{ __html: lesson.content }} style={{ border: '1px solid #ccc', padding: '10px' }} />
                     <br />
                     <Button type="submit" submit>
                         Lưu bài học
