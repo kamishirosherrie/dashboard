@@ -1,6 +1,7 @@
 import Modal from 'react-modal'
 import classNames from 'classnames/bind'
 import styles from './ModalDelete.module.scss'
+import Button from '../Button/Button'
 
 const cx = classNames.bind(styles)
 Modal.setAppElement('#root')
@@ -10,12 +11,12 @@ function ModalDelete({ isOpen, handleCancel, handleDelete }) {
         <Modal isOpen={isOpen} onRequestClose={handleCancel}>
             <p>Are you sure you want to delete?</p>
             <div className={cx('footer')}>
-                <button className={cx('cancel')} onClick={handleCancel}>
+                <Button cancel className={cx('cancel')} onClick={handleCancel}>
                     Cancel
-                </button>
-                <button className={cx('delete')} onClick={handleDelete}>
+                </Button>
+                <Button deleteBtn className={cx('delete')} onClick={handleDelete}>
                     Delete
-                </button>
+                </Button>
             </div>
         </Modal>
     )

@@ -4,6 +4,8 @@ import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getCourseBySlug, updateCourse } from '../../api/courseApi'
+import { routes } from '../../routes/route'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -24,7 +26,7 @@ function UpdateCourse() {
         console.log('Course info: ', course)
         await updateCourse(course)
         alert('Update course successfully!')
-        navigate('/admin/course')
+        navigate(routes.listCourse)
     }
 
     useEffect(() => {
@@ -40,31 +42,40 @@ function UpdateCourse() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>Update Course</h1>
+                <h1>Courses</h1>
                 <div className={cx('container')}>
-                    <div className={cx('create-user')}>
-                        <div className={cx('content')}>
-                            <div className={cx('course-group')}>
-                                <label htmlFor="title">Title</label>
-                                <input type="text" name="title" value={course.title} onChange={handleChange} className={cx('input')} required />
-                            </div>
-                            <div className={cx('course-group')}>
-                                <label htmlFor="description">Description</label>
-                                <textarea
-                                    type="text"
-                                    name="description"
-                                    value={course.description}
-                                    onChange={handleChange}
-                                    className={cx('textarea')}
-                                    required
-                                />
-                            </div>
+                    <div className={cx('content')}>
+                        <div className={cx('info-group')}>
+                            <label htmlFor="title">Title</label>
+                            <input type="text" name="title" value={course.title} onChange={handleChange} className={cx('input')} required />
                         </div>
-
-                        <button type="submit" className={cx('submit')} onClick={handleSubmit}>
-                            Save
-                        </button>
+                        <div className={cx('info-group')}>
+                            <label htmlFor="shortDescription">Short description</label>
+                            <input
+                                type="text"
+                                name="shortDescription"
+                                value={course.shortDescription}
+                                onChange={handleChange}
+                                className={cx('input')}
+                                required
+                            />
+                        </div>
+                        <div className={cx('info-group')}>
+                            <label htmlFor="description">Description</label>
+                            <textarea
+                                type="text"
+                                name="description"
+                                value={course.description}
+                                onChange={handleChange}
+                                className={cx('textarea')}
+                                required
+                            />
+                        </div>
                     </div>
+
+                    <Button type="submit" submit className={cx('submit')} onClick={handleSubmit}>
+                        Save
+                    </Button>
                 </div>
             </div>
         </MainAccount>

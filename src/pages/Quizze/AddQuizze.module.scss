@@ -1,0 +1,12 @@
+.container {
+    width: 50%;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        transform: translateY(5px);
+    }
+}

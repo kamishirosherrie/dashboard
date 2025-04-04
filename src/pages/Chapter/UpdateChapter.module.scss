@@ -1,0 +1,16 @@
+.content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        transform: translateY(5px);
+    }
+}

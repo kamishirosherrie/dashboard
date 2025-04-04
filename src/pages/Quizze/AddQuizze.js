@@ -7,6 +7,8 @@ import { addNewQuestion } from '../../api/questionApi'
 import { getQuestionType } from '../../api/questionTypeApi'
 import { getAllLesson } from '../../api/lessonApi'
 import { useNavigate } from 'react-router-dom'
+import { routes } from '../../routes/route'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -85,7 +87,7 @@ function AddQuizze() {
             console.log('Quizze submitted: ', quizzeResponse)
             const questionResponse = await addNewQuestion({ questions: question, quizzeName: quizze.title })
             console.log('Question submitted: ', questionResponse)
-            navigate('/admin/quizze')
+            navigate(routes.listQuizze)
         } catch (error) {
             console.log('Submitfailed: ', error)
         }
@@ -112,10 +114,10 @@ function AddQuizze() {
     return (
         <div className={cx('wrapper')}>
             <MainAccount>
-                <h2>Thêm bài kiểm tra</h2>
+                <h1>Quzizes</h1>
                 <div className={cx('container')}>
                     <div className={cx('quizze')}>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="lessonName">Lesson name</label>
                             <select name="lessonName" id="lessonName" onChange={handleChangeQuizzeInput}>
                                 <option value="">--Choose a lesson--</option>
@@ -126,15 +128,15 @@ function AddQuizze() {
                                 ))}
                             </select>
                         </div>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="title">Quizze title</label>
                             <input type="text" id="title" name="title" value={quizze.title} onChange={handleChangeQuizzeInput} />
                         </div>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="description">Description</label>
                             <input type="text" id="description" name="description" value={quizze.description} onChange={handleChangeQuizzeInput} />
                         </div>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="time">Time for test</label>
                             <input type="text" id="time" name="time" value={quizze.time} onChange={handleChangeQuizzeInput} />
                         </div>
@@ -159,7 +161,9 @@ function AddQuizze() {
                                         </option>
                                     ))}
                                 </select>
-                                <button onClick={() => handleDeleteQuestion(indexQ)}>Delete</button>
+                                <Button onClick={() => handleDeleteQuestion(indexQ)} deleteBtn>
+                                    Delete
+                                </Button>
                                 <div className={cx('answer-group')}>
                                     {itemQ?.answer.map((itemA, indexA) => (
                                         <div key={indexA} className={cx('answer')}>
@@ -179,18 +183,24 @@ function AddQuizze() {
                                                 checked={itemA.isCorrect}
                                                 onChange={(e) => handleChangeAnswerOption(e, indexQ, indexA)}
                                             />
-                                            <button onClick={() => handleDeleteAnswer(indexQ, indexA)}>Delete</button>
+                                            <Button onClick={() => handleDeleteAnswer(indexQ, indexA)} deleteBtn>
+                                                Delete
+                                            </Button>
                                         </div>
                                     ))}
-                                    <button onClick={() => handleAddAnswer(indexQ)}>Add an answer</button>
+                                    <Button onClick={() => handleAddAnswer(indexQ)} add>
+                                        Add an answer
+                                    </Button>
                                 </div>
                             </div>
                         ))}
-                        <button onClick={handleAddQuestion}>Add a question</button>
+                        <Button onClick={handleAddQuestion} add>
+                            Add a question
+                        </Button>
                     </div>
-                    <button type="submit" onClick={handleSubmit}>
+                    <Button type="submit" onClick={handleSubmit} submit>
                         Save
-                    </button>
+                    </Button>
                 </div>
             </MainAccount>
         </div>

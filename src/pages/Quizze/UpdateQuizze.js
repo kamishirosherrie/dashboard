@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { getQuizzeBySlug } from '../../api/quizzeApi'
 import { getQuestionByQuizzeSlug } from '../../api/questionApi'
 import { getQuestionType } from '../../api/questionTypeApi'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -71,7 +72,10 @@ function UpdateQuizze() {
         setQuestions(updatedQuestions)
     }
 
-    const handleSubmit = () => {}
+    const handleSubmit = () => {
+        console.log('Quizze: ', quizze)
+        console.log('Questions: ', questions)
+    }
 
     useEffect(() => {
         const getQuizze = async () => {
@@ -100,7 +104,7 @@ function UpdateQuizze() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>Update Quizze</h1>
+                <h1>Quzizes</h1>
                 <div className={cx('container')}>
                     <div className={cx('quizze')}>
                         <div className={cx('quizze-group')}>
@@ -147,7 +151,9 @@ function UpdateQuizze() {
                                         </option>
                                     ))}
                                 </select>
-                                <button onClick={() => handleDeleteQuestion(questionIndex)}>Delete</button>
+                                <Button onClick={() => handleDeleteQuestion(questionIndex)} deleteBtn>
+                                    Delete
+                                </Button>
                                 <div className={cx('answer-group')}>
                                     {question?.answer.map((itemA, answerIndex) => (
                                         <div key={answerIndex} className={cx('answer')}>
@@ -167,18 +173,24 @@ function UpdateQuizze() {
                                                 checked={itemA.isCorrect}
                                                 onChange={(e) => handleChangeAnswerOption(e, questionIndex, answerIndex)}
                                             />
-                                            <button onClick={() => handleDeleteAnswer(questionIndex, answerIndex)}>Delete</button>
+                                            <Button onClick={() => handleDeleteAnswer(questionIndex, answerIndex)} deleteBtn>
+                                                Delete
+                                            </Button>
                                         </div>
                                     ))}
-                                    <button onClick={() => handleAddAnswer(questionIndex)}>Add an answer</button>
+                                    <Button onClick={() => handleAddAnswer(questionIndex)} add>
+                                        Add an answer
+                                    </Button>
                                 </div>
                             </div>
                         ))}
-                        <button onClick={handleAddQuestion}>Add a question</button>
+                        <Button onClick={handleAddQuestion} add>
+                            Add a question
+                        </Button>
                     </div>
-                    <button type="submit" onClick={handleSubmit}>
+                    <Button type="submit" onClick={handleSubmit} submit>
                         Save
-                    </button>
+                    </Button>
                 </div>
             </div>
         </MainAccount>

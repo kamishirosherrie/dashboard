@@ -1,75 +1,94 @@
 @import '../../Variables.scss';
 
 .wrapper {
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.17);
+    box-shadow: 0 10px 8px #8d8d8d;
     width: 20%;
     height: 100vh;
     position: fixed;
     overflow-y: auto;
-}
 
-.navbar {
-    padding: 1.5rem;
-}
-
-.navbar-item {
-    padding: 15px 0;
-    position: relative;
-    font-weight: 700;
-
-    &:first-child {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    &::-webkit-scrollbar {
+        color: #ffffff00 !important;
     }
 
-    &:nth-child(2),
-    &:last-child {
-        align-items: center;
-        display: flex;
+    &::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
     }
-}
+    &:hover {
+        &::-webkit-scrollbar-track {
+            background: #ffffff00;
+        }
 
-.logo {
-    img {
-        width: 100px;
+        &::-webkit-scrollbar-thumb {
+            background: $primary-color;
+            border-radius: 0.15625rem;
+        }
     }
-}
 
-.bars {
-    cursor: pointer;
-    font-size: 20px;
-    color: $primary-color;
-}
+    .navbar {
+        padding: 1.5rem;
+    }
 
-.icon {
-    position: absolute;
-    color: $primary-color;
-    font-size: 24px;
-}
+    .navbar-item {
+        padding: 15px 0;
+        position: relative;
+        font-weight: 700;
 
-.navbar-link:not(:nth-child(1)) {
-    margin-left: 40px;
-}
+        &:first-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.navbar-link {
-    color: #000;
-    cursor: pointer;
+        &:nth-child(2),
+        &:last-child {
+            align-items: center;
+            display: flex;
+        }
+    }
 
-    &:visited {
+    .logo {
+        img {
+            width: 100px;
+        }
+    }
+
+    .bars {
+        cursor: pointer;
+        font-size: 20px;
+        color: $primary-color;
+    }
+
+    .icon {
+        position: absolute;
+        color: $primary-color;
+        font-size: 24px;
+    }
+
+    .navbar-link:not(:nth-child(1)) {
+        margin-left: 40px;
+    }
+
+    .navbar-link {
         color: #000;
+        cursor: pointer;
+
+        &:visited {
+            color: #000;
+        }
     }
-}
 
-.dropdown {
-    margin: 0;
-    padding: 20px 20px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    li {
+    .dropdown {
+        margin: 0;
+        padding: 20px 20px 0;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+
+        li {
+            display: flex;
+            align-items: center;
+        }
     }
 }

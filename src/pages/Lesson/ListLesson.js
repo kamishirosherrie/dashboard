@@ -6,6 +6,7 @@ import MainAccount from '../../layouts/MainAccount/MainAccount'
 import Table from '../../components/Table/Table'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
 import Button from '../../components/Button/Button'
+import { routes } from '../../routes/route'
 
 const cx = className.bind(styles)
 
@@ -49,7 +50,7 @@ function ListLesson() {
     return (
         <div className={cx('wrapper')}>
             <MainAccount>
-                <h1>List Lessons</h1>
+                <h1>Lessons</h1>
                 {lessons.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any lessons yet.</div>
                 ) : (
@@ -63,8 +64,12 @@ function ListLesson() {
                                 </td>
                                 <td>{lesson.chapterId?.courseId.title}</td>
                                 <td>
-                                    <Button href={`/admin/lesson/update-lesson/${lesson.slug}`}>Edit</Button>
-                                    <Button onClick={() => handleDelete(lesson._id)}>Delete</Button>
+                                    <Button href={`${routes.updateLesson}/${lesson.slug}`} editBtn>
+                                        Edit
+                                    </Button>
+                                    <Button onClick={() => handleDelete(lesson._id)} deleteBtn>
+                                        Delete
+                                    </Button>
                                 </td>
                             </tr>
                         ))}

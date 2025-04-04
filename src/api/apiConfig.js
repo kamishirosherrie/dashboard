@@ -25,6 +25,8 @@ const apiUrl = {
         getChapters: `/chapter`,
         getChapterById: (id) => `/chapter/${id}`,
         addNewChapter: `/chapter/addNewChapter`,
+        updateChapter: `/chapter/updateChapter`,
+        deleteChapter: (id) => `/chapter/deleteChapter/${id}`,
     },
     lessonUrl: {
         addNewLesson: `/lesson/addNewLesson`,

@@ -8,20 +8,13 @@ function Button({
     to,
     href,
     hover,
-    blue,
-    black,
-    blueOutline,
-    shadow,
-    primary,
-    outline,
-    large,
-    small,
+    add,
     editBtn,
     deleteBtn,
+    cancel,
     normal,
+    submit,
     fullWidth,
-    leftIcon,
-    rightIcon,
     className,
     children,
     disabled,
@@ -47,29 +40,20 @@ function Button({
 
     const classNames = cx('wrapper', {
         hover,
-        blue,
-        blueOutline,
-        black,
-        shadow,
-        primary,
-        outline,
-        large,
-        small,
+        add,
         editBtn,
         deleteBtn,
+        cancel,
+        submit,
         normal,
         fullWidth,
-        leftIcon,
-        rightIcon,
         disabled,
         [className]: className,
     })
 
     return (
         <Component className={classNames} {...props}>
-            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
             <span className={cx('text')}>{children}</span>
-            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Component>
     )
 }

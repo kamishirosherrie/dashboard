@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind'
 import styles from './UpdateLesson.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
-import ReactQuill from 'react-quill'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getLessonBySlug, updateLesson } from '../../api/lessonApi'
 import { getCourse } from '../../api/courseApi'
 import { getChapters } from '../../api/chapterApi'
+import { routes } from '../../routes/route'
+import Button from '../../components/Button/Button'
+import Editor from '../../components/Editor/Editor'
 
 const cx = classNames.bind(styles)
 
@@ -47,7 +49,7 @@ function UpdateLesson() {
         try {
             await updateLesson(lesson)
             alert('Update lesson successfully')
-            navigate('/admin/lesson')
+            navigate(routes.listLesson)
         } catch (error) {
             console.log(error.response.data.message)
             alert('Order already exists')
@@ -57,7 +59,7 @@ function UpdateLesson() {
     useEffect(() => {
         const getLesson = async () => {
             const response = await getLessonBySlug(slug)
-            setLesson(response.lesson)
+            setLesson({ ...response.lesson, content: response.lesson.content || '' })
         }
 
         const getAllCourses = async () => {
@@ -79,7 +81,7 @@ function UpdateLesson() {
     return (
         <div className={cx('wrapper')}>
             <MainAccount>
-                <h1>Update Lesson</h1>
+                <h1>Lessons</h1>
                 <div className={cx('container')}>
                     <label htmlFor="courseId">Khóa học</label>
                     <select name="courseId" onChange={handleChangeCourse} required>
@@ -106,13 +108,14 @@ function UpdateLesson() {
                     <input type="text" name="title" placeholder="Tiêu đề" value={lesson.title} onChange={handleChange} />
 
                     <h3>Nội dung bài học</h3>
-                    <ReactQuill theme="snow" value={lesson.content} onChange={handleChangeContent} />
+                    <Editor value={lesson.content || ''} onChange={handleChangeContent} />
+
                     <h3>Preview</h3>
                     <div dangerouslySetInnerHTML={{ __html: lesson.content }} style={{ border: '1px solid #ccc', padding: '10px' }} />
                     <br />
-                    <button type="submit" onClick={handleSubmit}>
+                    <Button type="submit" submit onClick={handleSubmit}>
                         Lưu bài học
-                    </button>
+                    </Button>
                 </div>
             </MainAccount>
         </div>

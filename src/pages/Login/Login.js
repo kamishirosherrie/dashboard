@@ -4,6 +4,8 @@ import styles from './Login.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../../api/authApi'
 import AuthContext from '../../context/AuthContext'
+import { routes } from '../../routes/route'
+import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
 
@@ -24,7 +26,7 @@ function Login() {
             if (user.identifier && user.passWord) {
                 const response = await loginUser(user)
                 login({ ...response.user })
-                navigate('/admin/user')
+                navigate(routes.listUser)
             } else {
                 alert('Please enter username and password')
             }
@@ -45,9 +47,9 @@ function Login() {
                     <label htmlFor="passWord">Password</label>
                     <input type="password" id="passWord" name="passWord" onChange={handleChange} required />
                 </div>
-                <button type="submit" className={cx('btn')}>
+                <Button type="submit" submit className={cx('btn')}>
                     Login
-                </button>
+                </Button>
             </form>
         </div>
     )

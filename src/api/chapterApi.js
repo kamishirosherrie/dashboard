@@ -20,3 +20,33 @@ export const getChapterById = async (id) => {
         throw error
     }
 }
+
+export const addNewChapter = async (chapter) => {
+    try {
+        const response = await axiosInstance.post(apiUrl.chapterUrl.addNewChapter, chapter)
+        return response.data
+    } catch (error) {
+        console.log('Add new chapter failed: ', error)
+        throw error
+    }
+}
+
+export const updateChapter = async (chapter) => {
+    try {
+        const response = await axiosInstance.put(apiUrl.chapterUrl.updateChapter, chapter)
+        return response.data
+    } catch (error) {
+        console.log('Update chapter failed: ', error)
+        throw error
+    }
+}
+
+export const deleteChapter = async (id) => {
+    try {
+        const response = await axiosInstance.delete(apiUrl.chapterUrl.deleteChapter(id))
+        return response.data
+    } catch (error) {
+        console.log('Delete chapter failed: ', error)
+        throw error
+    }
+}

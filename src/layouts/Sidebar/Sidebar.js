@@ -1,18 +1,25 @@
 import classNames from 'classnames/bind'
 import styles from './Sidebar.module.scss'
 import { Link } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import AuthContext from '../../context/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket, faBars, faCircleUser, faListUl, faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 
 import { logoutUser } from '../../api/authApi'
 import images from '../../assets/images/image'
+import { routes } from '../../routes/route'
 
 const cx = classNames.bind(styles)
 
 function Sidebar() {
     const { user, logout } = useContext(AuthContext)
+
+    // const [active, setActive] = useState(false)
+
+    // const handleClick = () => {
+    //     setActive((prev) => !prev)
+    // }
 
     const handleLogout = async () => {
         await logoutUser()
@@ -22,14 +29,14 @@ function Sidebar() {
         <div className={cx('wrapper')}>
             <div className={cx('navbar')}>
                 <div className={cx('navbar-item')}>
-                    <Link to="/admin/user" className={cx('navbar-link', 'logo')}>
+                    <Link to={routes.listUser} className={cx('navbar-link', 'logo')}>
                         <img src={images.logo} alt="logo" />
                     </Link>
-                    <FontAwesomeIcon icon={faBars} className={cx('bars')} />
+                    {/* <FontAwesomeIcon icon={faBars} className={cx('bars')} onClick={handleClick} /> */}
                 </div>
                 <div className={cx('navbar-item')}>
                     <FontAwesomeIcon icon={faCircleUser} className={cx('icon')} />
-                    <Link to="/admin/user" className={cx('navbar-link')}>
+                    <Link to={routes.listUser} className={cx('navbar-link')}>
                         {user?.fullName}
                     </Link>
                 </div>
@@ -38,13 +45,13 @@ function Sidebar() {
                     <ul className={cx('dropdown')}>
                         <li>
                             <FontAwesomeIcon icon={faListUl} className={cx('icon')} />
-                            <Link to="/admin/user" className={cx('navbar-link')}>
+                            <Link to={routes.listUser} className={cx('navbar-link')}>
                                 List User
                             </Link>
                         </li>
                         <li>
                             <FontAwesomeIcon icon={faSquarePlus} className={cx('icon')} />
-                            <Link to="/admin/user/add-user" className={cx('navbar-link')}>
+                            <Link to={routes.addUser} className={cx('navbar-link')}>
                                 Add User
                             </Link>
                         </li>
@@ -55,13 +62,13 @@ function Sidebar() {
                     <ul className={cx('dropdown')}>
                         <li>
                             <FontAwesomeIcon icon={faListUl} className={cx('icon')} />
-                            <Link to="/admin/course" className={cx('navbar-link')}>
+                            <Link to={routes.listCourse} className={cx('navbar-link')}>
                                 List Course
                             </Link>
                         </li>
                         <li>
                             <FontAwesomeIcon icon={faSquarePlus} className={cx('icon')} />
-                            <Link to="/admin/course/add-course" className={cx('navbar-link')}>
+                            <Link to={routes.addCourse} className={cx('navbar-link')}>
                                 Add Course
                             </Link>
                         </li>
@@ -72,13 +79,13 @@ function Sidebar() {
                     <ul className={cx('dropdown')}>
                         <li>
                             <FontAwesomeIcon icon={faListUl} className={cx('icon')} />
-                            <Link to="/admin/quizze" className={cx('navbar-link')}>
+                            <Link to={routes.listChapter} className={cx('navbar-link')}>
                                 List Chapter
                             </Link>
                         </li>
                         <li>
                             <FontAwesomeIcon icon={faSquarePlus} className={cx('icon')} />
-                            <Link to="/admin/quizze/add-quizze" className={cx('navbar-link')}>
+                            <Link to={routes.addChapter} className={cx('navbar-link')}>
                                 Add Chapter
                             </Link>
                         </li>
@@ -89,13 +96,13 @@ function Sidebar() {
                     <ul className={cx('dropdown')}>
                         <li>
                             <FontAwesomeIcon icon={faListUl} className={cx('icon')} />
-                            <Link to="/admin/lesson" className={cx('navbar-link')}>
+                            <Link to={routes.listLesson} className={cx('navbar-link')}>
                                 List Lesson
                             </Link>
                         </li>
                         <li>
                             <FontAwesomeIcon icon={faSquarePlus} className={cx('icon')} />
-                            <Link to="/admin/lesson/add-lesson" className={cx('navbar-link')}>
+                            <Link to={routes.addLesson} className={cx('navbar-link')}>
                                 Add Lesson
                             </Link>
                         </li>
@@ -106,13 +113,13 @@ function Sidebar() {
                     <ul className={cx('dropdown')}>
                         <li>
                             <FontAwesomeIcon icon={faListUl} className={cx('icon')} />
-                            <Link to="/admin/quizze" className={cx('navbar-link')}>
+                            <Link to={routes.listQuizze} className={cx('navbar-link')}>
                                 List Quizze
                             </Link>
                         </li>
                         <li>
                             <FontAwesomeIcon icon={faSquarePlus} className={cx('icon')} />
-                            <Link to="/admin/quizze/add-quizze" className={cx('navbar-link')}>
+                            <Link to={routes.addQuizze} className={cx('navbar-link')}>
                                 Add Quizze
                             </Link>
                         </li>
@@ -120,7 +127,7 @@ function Sidebar() {
                 </div>
                 <div className={cx('navbar-item')}>
                     <FontAwesomeIcon icon={faArrowRightFromBracket} className={cx('icon')} />
-                    <Link to="/login" className={cx('navbar-link')} onClick={handleLogout}>
+                    <Link to={routes.login} className={cx('navbar-link')} onClick={handleLogout}>
                         Đăng xuất
                     </Link>
                 </div>

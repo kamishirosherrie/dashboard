@@ -7,3 +7,25 @@
     width: 100%;
     padding: 1.5rem;
 }
+
+.content {
+    table {
+        box-shadow: 0 0 2px 0px rgba(121, 121, 121, 0.6705882353);
+
+        tr {
+            td:last-child {
+                display: flex;
+                gap: 10px;
+            }
+        }
+    }
+
+    input,
+    select,
+    textarea {
+        outline: none;
+        border: none;
+        border-bottom: 1px solid black;
+        padding: 10px 10px;
+    }
+}

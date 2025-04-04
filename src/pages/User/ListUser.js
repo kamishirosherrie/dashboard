@@ -7,6 +7,7 @@ import Table from '../../components/Table/Table'
 import { deleteUser, getAllUsers } from '../../api/userApi'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
 import Button from '../../components/Button/Button'
+import { routes } from '../../routes/route'
 
 const cx = classNames.bind(styles)
 
@@ -50,7 +51,7 @@ function ListUser() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>List User</h1>
+                <h1>Users</h1>
                 <Table headings={['Index', 'User', 'Email', 'Role', 'Active']}>
                     {users.map((user, index) => (
                         <tr key={index}>
@@ -58,10 +59,14 @@ function ListUser() {
                             <td>{user.fullName}</td>
                             <td>{user.email}</td>
                             <td>{user.roleId.roleName}</td>
-                            <td>{user.isDisabled === true ? 'No' : 'Yes'}</td>
+                            {user.isDisabled ? <td className={cx('disable')}>No</td> : <td className={cx('enable')}>Yes</td>}
                             <td>
-                                <Button href={`/admin/user/updateUser/${user.userName}`}>Edit</Button>
-                                <Button onClick={() => handleDelete(user.userName)}>Delete</Button>
+                                <Button href={`${routes.updateUser}/${user.userName}`} editBtn>
+                                    Edit
+                                </Button>
+                                <Button onClick={() => handleDelete(user.userName)} deleteBtn>
+                                    Delete
+                                </Button>
                             </td>
                         </tr>
                     ))}

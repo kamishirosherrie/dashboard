@@ -1,0 +1,13 @@
+.container {
+    width: 50%;
+}
+
+.quizze-group,
+.question-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        transform: translateY(5px);
+    }
+}

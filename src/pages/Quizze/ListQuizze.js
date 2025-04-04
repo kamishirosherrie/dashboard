@@ -6,6 +6,7 @@ import { deleteQuizze, getQuizzesWithQuestions } from '../../api/quizzeApi'
 import Table from '../../components/Table/Table'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
 import Button from '../../components/Button/Button'
+import { routes } from '../../routes/route'
 
 const cx = classNames.bind(styles)
 
@@ -48,7 +49,7 @@ function ListQuizze() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>List Quizze</h1>
+                <h1>Quzizes</h1>
                 {quizzes.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any quizzes yet.</div>
                 ) : (
@@ -59,8 +60,12 @@ function ListQuizze() {
                                 <td>{quizze.title}</td>
                                 <td>{quizze.lesson.title}</td>
                                 <td>
-                                    <Button href={`/admin/quizze/update-quizze/${quizze.slug}`}>Edit</Button>
-                                    <Button onClick={() => handleDelete(quizze._id)}>Delete</Button>
+                                    <Button href={`${routes.updateQuizze}/${quizze.slug}`} editBtn>
+                                        Edit
+                                    </Button>
+                                    <Button onClick={() => handleDelete(quizze._id)} deleteBtn>
+                                        Delete
+                                    </Button>
                                 </td>
                             </tr>
                         ))}

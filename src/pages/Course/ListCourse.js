@@ -7,6 +7,7 @@ import Table from '../../components/Table/Table'
 import { deleteCourse, getCourse } from '../../api/courseApi'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
 import Button from '../../components/Button/Button'
+import { routes } from '../../routes/route'
 
 const cx = classNames.bind(styles)
 
@@ -45,7 +46,7 @@ function ListCourse() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>List Course</h1>
+                <h1>Courses</h1>
                 {courses.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any courses yet.</div>
                 ) : (
@@ -56,7 +57,7 @@ function ListCourse() {
                                 <td>{course.title}</td>
                                 <td>{course.description}</td>
                                 <td>
-                                    <Button editBtn href={`/admin/course/update-course/${course.slug}`}>
+                                    <Button editBtn href={`${routes.updateCourse}/${course.slug}`}>
                                         Edit
                                     </Button>
 

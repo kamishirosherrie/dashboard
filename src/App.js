@@ -14,30 +14,40 @@ import UpdateQuizze from './pages/Quizze/UpdateQuizze'
 import Login from './pages/Login/Login'
 import { useContext } from 'react'
 import AuthContext from './context/AuthContext'
+import AddChapter from './pages/Chapter/AddChapter'
+import UpdateChapter from './pages/Chapter/UpdateChapter'
+import ListChapter from './pages/Chapter/ListChapter'
+import { routes } from './routes/route'
 
 function App() {
     const { user } = useContext(AuthContext)
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
+                <Route path={routes.home} element={user ? <Navigate to={routes.listUser} /> : <Login />} />
+                <Route path={routes.login} element={user ? <Navigate to={routes.listUser} /> : <Login />} />
 
-                <Route path="/admin/user" element={user ? <ListUser /> : <Navigate to="/login" />} />
-                <Route path="/admin/user/add-user" element={user ? <AddUser /> : <Navigate to="/login" />} />
-                <Route path="/admin/user/updateUser/:userName" element={user ? <UpdateUser /> : <Navigate to="/login" />} />
+                <Route path={routes.listUser} element={user ? <ListUser /> : <Navigate to="/login" />} />
+                <Route path={routes.addUser} element={user ? <AddUser /> : <Navigate to="/login" />} />
+                <Route path={`${routes.updateUser}/:userName`} element={user ? <UpdateUser /> : <Navigate to="/login" />} />
 
-                <Route path="/admin/course" element={user ? <ListCourse /> : <Navigate to="/login" />} />
-                <Route path="/admin/course/add-course" element={user ? <AddCourse /> : <Navigate to="/login" />} />
-                <Route path="/admin/course/update-course/:slug" element={user ? <UpdateCourse /> : <Navigate to="/login" />} />
+                <Route path={routes.listCourse} element={user ? <ListCourse /> : <Navigate to="/login" />} />
+                <Route path={routes.addCourse} element={user ? <AddCourse /> : <Navigate to="/login" />} />
+                <Route path={`${routes.updateCourse}/:slug`} element={user ? <UpdateCourse /> : <Navigate to="/login" />} />
 
-                <Route path="/admin/lesson" element={user ? <ListLesson /> : <Navigate to="/login" />} />
-                <Route path="/admin/lesson/add-lesson" element={user ? <AddLesson /> : <Navigate to="/login" />} />
-                <Route path="/admin/lesson/update-lesson/:slug" element={user ? <UpdateLesson /> : <Navigate to="/login" />} />
+                <Route path={routes.listChapter} element={user ? <ListChapter /> : <Navigate to="/login" />} />
+                <Route path={routes.addChapter} element={user ? <AddChapter /> : <Navigate to="/login" />} />
+                <Route path={`${routes.updateChapter}/:id`} element={user ? <UpdateChapter /> : <Navigate to="/login" />} />
 
-                <Route path="/admin/quizze" element={user ? <ListQuizze /> : <Navigate to="/login" />} />
-                <Route path="/admin/quizze/add-quizze" element={user ? <AddQuizze /> : <Navigate to="/login" />} />
-                <Route path="/admin/quizze/update-quizze/:slug" element={user ? <UpdateQuizze /> : <Navigate to="/login" />} />
+                <Route path={routes.listLesson} element={user ? <ListLesson /> : <Navigate to="/login" />} />
+                <Route path={routes.addLesson} element={user ? <AddLesson /> : <Navigate to="/login" />} />
+                <Route path={`${routes.updateLesson}/:slug`} element={user ? <UpdateLesson /> : <Navigate to="/login" />} />
+
+                <Route path={routes.listQuizze} element={user ? <ListQuizze /> : <Navigate to="/login" />} />
+                <Route path={routes.addQuizze} element={user ? <AddQuizze /> : <Navigate to="/login" />} />
+                <Route path={`${routes.updateQuizze}/:slug`} element={user ? <UpdateQuizze /> : <Navigate to="/login" />} />
+
+                {/* <Route path="*" element={<Navigate to="/" />} /> */}
             </Routes>
         </Router>
     )

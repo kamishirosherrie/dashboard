@@ -3,86 +3,34 @@
 .wrapper {
     border: none;
     cursor: pointer;
-    padding: 10px 20px;
     font-family: $font-family;
-    font-size: 14px;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
 }
 
-.blue.hover:hover {
-    background-color: unset;
-    border: 2px solid $primary-color;
-    color: $primary-color;
-}
-
-.blue {
+.add {
     background-color: $primary-color;
-    color: $btn-primary;
-    border-radius: 20px;
-    font-weight: 700;
-    border: 2px solid $primary-color;
-}
-
-.primary.hover:hover {
-    background-color: #000;
-    color: $btn-primary;
-    border: 2px solid #000;
-}
-
-.outline.hover:hover {
-    background-color: #000;
     color: #fff;
-    border: 2px solid #000;
 }
 
-.black {
-    background-color: #000;
-    color: white;
-    border-radius: 20px;
-    font-weight: 700;
-    border: 2px solid #00000000;
+.editBtn {
+    background-color: $primary-color;
+    color: #fff;
 }
 
-.primary {
-    color: #000;
-    background-color: $btn-primary;
-    border-radius: 20px;
-    font-weight: 700;
-    border: 2px solid #00000000;
+.deleteBtn {
+    background-color: #dc3545;
+    color: #fff;
 }
 
-.outline {
-    border: 2px solid $btn-primary;
-    color: $btn-primary;
-    border-radius: 20px;
-    font-weight: 700;
-    background-color: unset;
+.cancel {
+    background-color: $primary-color;
+    color: #fff;
 }
 
-.blueOutline {
-    border: 2px solid $primary-color;
-    border-radius: 20px;
-    font-weight: 700;
-    background-color: unset;
-}
-
-.large {
-    padding: 12px 30px;
-    border-radius: 40px;
-}
-
-.normal {
-    color: #000;
-    outline: none;
-    border: none;
-    padding: 0;
-    background-color: unset;
-    font-weight: 700;
-}
-
-.fullWidth {
-    width: 100%;
-}
-
-.shadow {
-    box-shadow: $primary-box-shadow;
+.submit {
+    background-color: $primary-color;
+    color: #fff;
 }
