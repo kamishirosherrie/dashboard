@@ -101,7 +101,7 @@ function AddQuizze() {
         const getQuestionTypes = async () => {
             try {
                 const response = await getQuestionType()
-                setQuestionTypes(response.questionTypes)
+                setQuestionTypes(response)
             } catch (error) {
                 console.log('Get question types failed')
             }
@@ -114,7 +114,7 @@ function AddQuizze() {
     return (
         <div className={cx('wrapper')}>
             <MainAccount>
-                <h1>Quzizes</h1>
+                <h1>Quizzes</h1>
                 <div className={cx('container')}>
                     <div className={cx('quizze')}>
                         <div className={cx('info-group')}>
@@ -143,8 +143,12 @@ function AddQuizze() {
                     </div>
                     <div className={cx('question')}>
                         {question?.map((itemQ, indexQ) => (
-                            <div key={indexQ} className={cx('question-group')}>
-                                <label htmlFor="question">Question</label>
+                            <div key={indexQ} className={cx('info-group')}>
+                                <label htmlFor="question">
+                                    <strong>
+                                        {indexQ + 1} - Question {indexQ + 1}
+                                    </strong>
+                                </label>
                                 <input
                                     type="text"
                                     id={indexQ}
@@ -164,28 +168,32 @@ function AddQuizze() {
                                 <Button onClick={() => handleDeleteQuestion(indexQ)} deleteBtn>
                                     Delete
                                 </Button>
-                                <div className={cx('answer-group')}>
+                                <div className={cx('info-group')}>
                                     {itemQ?.answer.map((itemA, indexA) => (
                                         <div key={indexA} className={cx('answer')}>
-                                            <label htmlFor="text">Answer</label>
-                                            <input
-                                                type="text"
-                                                id="text"
-                                                name="text"
-                                                value={itemA.text}
-                                                onChange={(e) => handleChangeAnswerInput(e, indexQ, indexA)}
-                                            />
-                                            <label htmlFor="isCorrect">Đúng/Sai</label>
-                                            <input
-                                                type="checkbox"
-                                                id="isCorrect"
-                                                name="isCorrect"
-                                                checked={itemA.isCorrect}
-                                                onChange={(e) => handleChangeAnswerOption(e, indexQ, indexA)}
-                                            />
-                                            <Button onClick={() => handleDeleteAnswer(indexQ, indexA)} deleteBtn>
-                                                Delete
-                                            </Button>
+                                            <div className={cx('answer-group')}>
+                                                <label htmlFor="text">Answer</label>
+                                                <input
+                                                    type="text"
+                                                    id="text"
+                                                    name="text"
+                                                    value={itemA.text}
+                                                    onChange={(e) => handleChangeAnswerInput(e, indexQ, indexA)}
+                                                />
+                                            </div>
+                                            <div className={cx('true-false')}>
+                                                <label htmlFor="isCorrect">Đúng/Sai</label>
+                                                <input
+                                                    type="checkbox"
+                                                    id="isCorrect"
+                                                    name="isCorrect"
+                                                    checked={itemA.isCorrect}
+                                                    onChange={(e) => handleChangeAnswerOption(e, indexQ, indexA)}
+                                                />
+                                                <Button onClick={() => handleDeleteAnswer(indexQ, indexA)} deleteBtn>
+                                                    Delete
+                                                </Button>
+                                            </div>
                                         </div>
                                     ))}
                                     <Button onClick={() => handleAddAnswer(indexQ)} add>

@@ -49,7 +49,7 @@ function ListQuizze() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>Quzizes</h1>
+                <h1>Quizzes</h1>
                 {quizzes.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any quizzes yet.</div>
                 ) : (

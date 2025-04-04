@@ -104,40 +104,42 @@ function UpdateQuizze() {
     return (
         <MainAccount>
             <div className={cx('wrapper')}>
-                <h1>Quzizes</h1>
+                <h1>Quizzes</h1>
                 <div className={cx('container')}>
                     <div className={cx('quizze')}>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="lessonName">Lesson name</label>
                             <input type="text" id="lessonName" name="lessonName" value={quizze.lessonId?.title} readOnly />
                         </div>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="title">Quizze title</label>
                             <input type="text" id="title" name="title" value={quizze.title} onChange={handleChangeQuizzeInput} />
                         </div>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="description">Description</label>
                             <input type="text" id="description" name="description" value={quizze.description} onChange={handleChangeQuizzeInput} />
                         </div>
-                        <div className={cx('quizze-group')}>
+                        <div className={cx('info-group')}>
                             <label htmlFor="time">Time for test</label>
                             <input type="text" id="time" name="time" value={quizze.time} onChange={handleChangeQuizzeInput} />
                         </div>
                     </div>
 
-                    <div className={cx('question-group')}>
+                    <div className={cx('info-group')}>
                         {questions.map((question, questionIndex) => (
-                            <div key={questionIndex} className={cx('question')}>
-                                <div className={cx('question-title')}>
-                                    <label htmlFor={questionIndex}>Question {questionIndex + 1}</label>
-                                    <input
-                                        type="text"
-                                        id={questionIndex}
-                                        name="question"
-                                        value={question.question}
-                                        onChange={(e) => handleChangeQuestionInput(e, questionIndex)}
-                                    />
-                                </div>
+                            <div key={questionIndex} className={cx('info-group')}>
+                                <label htmlFor="question">
+                                    <strong>
+                                        {questionIndex + 1} - Question {questionIndex + 1}
+                                    </strong>
+                                </label>
+                                <input
+                                    type="text"
+                                    id={questionIndex}
+                                    name="question"
+                                    value={question.question}
+                                    onChange={(e) => handleChangeQuestionInput(e, questionIndex)}
+                                />
                                 <label htmlFor="questionTypeId">Question type</label>
                                 <select
                                     name="questionTypeId"
@@ -154,28 +156,32 @@ function UpdateQuizze() {
                                 <Button onClick={() => handleDeleteQuestion(questionIndex)} deleteBtn>
                                     Delete
                                 </Button>
-                                <div className={cx('answer-group')}>
+                                <div className={cx('info-group')}>
                                     {question?.answer.map((itemA, answerIndex) => (
                                         <div key={answerIndex} className={cx('answer')}>
-                                            <label htmlFor="text">Answer</label>
-                                            <input
-                                                type="text"
-                                                id="text"
-                                                name="text"
-                                                value={itemA.text}
-                                                onChange={(e) => handleChangeAnswerInput(e, questionIndex, answerIndex)}
-                                            />
-                                            <label htmlFor="isCorrect">Đúng/Sai</label>
-                                            <input
-                                                type="checkbox"
-                                                id="isCorrect"
-                                                name="isCorrect"
-                                                checked={itemA.isCorrect}
-                                                onChange={(e) => handleChangeAnswerOption(e, questionIndex, answerIndex)}
-                                            />
-                                            <Button onClick={() => handleDeleteAnswer(questionIndex, answerIndex)} deleteBtn>
-                                                Delete
-                                            </Button>
+                                            <div className={cx('answer-group')}>
+                                                <label htmlFor="text">Answer</label>
+                                                <input
+                                                    type="text"
+                                                    id="text"
+                                                    name="text"
+                                                    value={itemA.text}
+                                                    onChange={(e) => handleChangeAnswerInput(e, questionIndex, answerIndex)}
+                                                />
+                                            </div>
+                                            <div className={cx('true-false')}>
+                                                <label htmlFor="isCorrect">Đúng/Sai</label>
+                                                <input
+                                                    type="checkbox"
+                                                    id="isCorrect"
+                                                    name="isCorrect"
+                                                    checked={itemA.isCorrect}
+                                                    onChange={(e) => handleChangeAnswerOption(e, questionIndex, answerIndex)}
+                                                />
+                                                <Button onClick={() => handleDeleteAnswer(questionIndex, answerIndex)} deleteBtn>
+                                                    Delete
+                                                </Button>
+                                            </div>
                                         </div>
                                     ))}
                                     <Button onClick={() => handleAddAnswer(questionIndex)} add>

@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from './Login.module.scss'
 import { useNavigate } from 'react-router-dom'
+
+import { routes } from '../../routes/route'
 import { loginUser } from '../../api/authApi'
 import AuthContext from '../../context/AuthContext'
-import { routes } from '../../routes/route'
 import Button from '../../components/Button/Button'
 
 const cx = classNames.bind(styles)
@@ -37,8 +38,9 @@ function Login() {
 
     return (
         <div className={cx('wrapper')}>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <form className={cx('form')} onSubmit={handleSubmit}>
+                <p className={cx('title')}>Welcome to ELearning Admin!</p>
+                <p className={cx('sub-title')}>Please login to start your session</p>
                 <div className={cx('form-group')}>
                     <label htmlFor="identifier">Username</label>
                     <input type="text" id="identifier" name="identifier" onChange={handleChange} required />

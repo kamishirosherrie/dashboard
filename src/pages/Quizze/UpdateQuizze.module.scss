@@ -1,13 +1,55 @@
 .container {
     width: 50%;
+    position: relative;
+
+    button {
+        margin-top: 10px;
+    }
 }
 
-.quizze-group,
-.question-group {
+.info-group {
     display: flex;
     flex-direction: column;
 
     label {
-        transform: translateY(5px);
+        transform: translateY(10px);
+    }
+}
+
+.question-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.answer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    button {
+        margin: 0;
+    }
+}
+
+.answer-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.true-false {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+
+    label {
+        transform: none;
+    }
+
+    input {
+        position: relative;
+        bottom: 5px;
+        right: 10px;
     }
 }
