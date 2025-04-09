@@ -61,7 +61,7 @@ function UpdateChapter() {
                     <div className={cx('content')}>
                         <div className={cx('info-group')}>
                             <label htmlFor="title">Course</label>
-                            <select name="courseId" value={chapter.courseId?.title} onChange={handleChangeCourse} className={cx('input')} required>
+                            <select name="courseId" value={chapter.courseId?._id} onChange={handleChangeCourse} className={cx('input')} required>
                                 {courses.map((course) => (
                                     <option key={course._id} value={course._id}>
                                         {course.title}

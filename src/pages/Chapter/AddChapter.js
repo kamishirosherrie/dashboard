@@ -74,10 +74,6 @@ function AddChapter() {
                             <label htmlFor="title">Title</label>
                             <input type="text" name="title" onChange={handleChange} className={cx('input')} required />
                         </div>
-                        <div className={cx('info-group')}>
-                            <label htmlFor="order">Order</label>
-                            <input type="text" name="order" onChange={handleChange} className={cx('input')} required />
-                        </div>
                     </div>
 
                     <Button type="submit" submit className={cx('submit')} onClick={handleSubmit}>

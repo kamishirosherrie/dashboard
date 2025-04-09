@@ -1,17 +1,20 @@
 import classNames from 'classnames/bind'
 import styles from './UpdateCourse.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getCourseBySlug, updateCourse } from '../../api/courseApi'
 import { routes } from '../../routes/route'
 import Button from '../../components/Button/Button'
+import JoditEditor from 'jodit-react'
 
 const cx = classNames.bind(styles)
 
 function UpdateCourse() {
     const { slug } = useParams()
     const navigate = useNavigate()
+
+    const editor = useRef(null)
     const [course, setCourse] = useState({
         _id: '',
         title: '',
@@ -20,6 +23,10 @@ function UpdateCourse() {
     const handleChange = (event) => {
         const { name, value } = event.target
         setCourse((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleChangeContent = (content) => {
+        setCourse((prev) => ({ ...prev, description: content }))
     }
 
     const handleSubmit = async () => {
@@ -62,16 +69,9 @@ function UpdateCourse() {
                         </div>
                         <div className={cx('info-group')}>
                             <label htmlFor="description">Description</label>
-                            <textarea
-                                type="text"
-                                name="description"
-                                value={course.description}
-                                onChange={handleChange}
-                                className={cx('textarea')}
-                                required
-                            />
                         </div>
                     </div>
+                    <JoditEditor ref={editor} value={course.description} onChange={(content) => handleChangeContent(content)} />
 
                     <Button type="submit" submit className={cx('submit')} onClick={handleSubmit}>
                         Save

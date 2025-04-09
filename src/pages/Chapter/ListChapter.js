@@ -57,7 +57,7 @@ function ListChapter() {
                     <Table headings={['Order', 'Chapter', 'Course']}>
                         {chapters.map((chapter, index) => (
                             <tr key={index}>
-                                <td>{chapter.order}</td>
+                                <td>{index + 1}</td>
                                 <td>{chapter.title}</td>
                                 <td>{chapter.courseId.title}</td>
                                 <td>

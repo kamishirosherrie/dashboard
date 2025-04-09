@@ -37,7 +37,12 @@ function UpdateLesson() {
 
     const handleChangeCourse = (e) => {
         const { value } = e.target
-        setChapters(allChapters.filter((chapter) => chapter.courseId._id === value))
+        const filteredChapters = allChapters.filter((chapter) => chapter.courseId._id === value)
+        setChapters(filteredChapters)
+        setLesson((prev) => ({
+            ...prev,
+            chapterId: filteredChapters.length > 0 ? filteredChapters[0]._id : '',
+        }))
     }
     const handleChangeChapter = (e) => {
         const { name, value } = e.target
@@ -51,8 +56,8 @@ function UpdateLesson() {
     const handleSubmit = async (e) => {
         try {
             await updateLesson(lesson)
-            alert('Update lesson successfully')
             navigate(routes.listLesson)
+            console.log(lesson)
         } catch (error) {
             console.log(error.response.data.message)
             alert('Order already exists')
@@ -88,7 +93,7 @@ function UpdateLesson() {
                 <div className={cx('container')}>
                     <div className={cx('form-group')}>
                         <label htmlFor="courseId">Khóa học</label>
-                        <select name="courseId" onChange={handleChangeCourse} required>
+                        <select name="courseId" value={lesson.chapterId.courseId?._id} onChange={handleChangeCourse} required>
                             {courses.map((course) => (
                                 <option key={course._id} value={course._id}>
                                     {course.title}
@@ -97,7 +102,7 @@ function UpdateLesson() {
                         </select>
 
                         <label htmlFor="chapterId">Chương</label>
-                        <select name="chapterId" value={lesson.chapterId} onChange={handleChangeChapter} required>
+                        <select name="chapterId" value={lesson.chapterId?._id} onChange={handleChangeChapter} required>
                             {chapters.map((chapter) => (
                                 <option key={chapter._id} value={chapter?._id}>
                                     Chương {chapter.order}: {chapter.title}

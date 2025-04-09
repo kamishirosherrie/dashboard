@@ -1,16 +1,18 @@
 import classNames from 'classnames/bind'
 import styles from './AddCourse.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { addNewCourse } from '../../api/courseApi'
 import { useNavigate } from 'react-router-dom'
 import { routes } from '../../routes/route'
 import Button from '../../components/Button/Button'
+import JoditEditor from 'jodit-react'
 
 const cx = classNames.bind(styles)
 
 function AddCourse() {
     const navigate = useNavigate()
+    const editor = useRef(null)
     const [course, setCourse] = useState({
         title: '',
         description: '',
@@ -19,6 +21,10 @@ function AddCourse() {
     const handleChange = (event) => {
         const { name, value } = event.target
         setCourse({ ...course, [name]: value })
+    }
+
+    const handleChangeContent = (content) => {
+        setCourse((prev) => ({ ...prev, description: content }))
     }
 
     const handleSubmit = async () => {
@@ -48,9 +54,9 @@ function AddCourse() {
                         </div>
                         <div className={cx('info-group')}>
                             <label htmlFor="description">Description</label>
-                            <textarea type="text" name="description" onChange={handleChange} className={cx('textarea')} required />
                         </div>
                     </div>
+                    <JoditEditor ref={editor} value={course.description} onChange={(content) => handleChangeContent(content)} />
 
                     <Button type="submit" submit className={cx('submit')} onClick={handleSubmit}>
                         Save
