@@ -59,7 +59,7 @@ function ListChapter() {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{chapter.title}</td>
-                                <td>{chapter.courseId.title}</td>
+                                <td>{chapter.courseId?.title}</td>
                                 <td>
                                     <Button editBtn href={`${routes.updateChapter}/${chapter._id}`}>
                                         Edit
