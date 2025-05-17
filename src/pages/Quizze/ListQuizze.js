@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import styles from './ListQuizze.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useEffect, useState } from 'react'
-import { deleteQuizze, getQuizzesWithQuestions } from '../../api/quizzeApi'
+import { deleteQuizze, getAllQuizze } from '../../api/quizzeApi'
 import Table from '../../components/Table/Table'
 import ModalDelete from '../../components/ModalDelete/ModalDelete'
 import Button from '../../components/Button/Button'
@@ -38,8 +38,8 @@ function ListQuizze() {
     useEffect(() => {
         const getQuizzes = async () => {
             try {
-                const response = await getQuizzesWithQuestions()
-                setQuizzes(response.quizzesWithQuestons)
+                const response = await getAllQuizze()
+                setQuizzes(response.quizzes)
             } catch (error) {
                 console.log('Get all quizzes failed: ', error)
             }
@@ -53,12 +53,13 @@ function ListQuizze() {
                 {quizzes.length === 0 ? (
                     <div className={cx('no-data')}>You haven't added any quizzes yet.</div>
                 ) : (
-                    <Table headings={['Index', 'Quizze', 'Lesson']}>
+                    <Table headings={['Index', 'Quizze', 'Lesson', 'Type']}>
                         {quizzes.map((quizze, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{quizze.title}</td>
-                                <td>{quizze.lesson.title}</td>
+                                <td>{quizze.lessonId?.title}</td>
+                                <td>{quizze.type && quizze.type === 'entrytest' ? 'Entry test' : 'Lesson'}</td>
                                 <td>
                                     <Button href={`${routes.updateQuizze}/${quizze.slug}`} editBtn>
                                         Edit

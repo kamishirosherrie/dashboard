@@ -16,6 +16,7 @@ function AddQuizze() {
     const navigate = useNavigate()
     const [lessons, setLessons] = useState([])
     const [quizze, setQuizze] = useState({
+        type: '',
         lessonName: '',
         title: '',
         description: '',
@@ -118,7 +119,15 @@ function AddQuizze() {
                 <div className={cx('container')}>
                     <div className={cx('quizze')}>
                         <div className={cx('info-group')}>
-                            <label htmlFor="lessonName">Lesson name</label>
+                            <label htmlFor="type">Quizze type</label>
+                            <select name="type" id="type" onChange={handleChangeQuizzeInput}>
+                                <option value="">--Choose a type--</option>
+                                <option value="lesson">Lesson</option>
+                                <option value="entrytest">Entry test</option>
+                            </select>
+                        </div>
+                        <div className={cx('info-group')}>
+                            <label htmlFor="lessonName">Lesson name (Give blank if this's an entry test)</label>
                             <select name="lessonName" id="lessonName" onChange={handleChangeQuizzeInput}>
                                 <option value="">--Choose a lesson--</option>
                                 {lessons.map((lesson, index) => (

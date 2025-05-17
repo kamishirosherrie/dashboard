@@ -19,14 +19,20 @@ function UpdateCourse() {
         _id: '',
         title: '',
         description: '',
+        fullDescription: '',
+        shortDescription: '',
+        price: 0,
     })
     const handleChange = (event) => {
         const { name, value } = event.target
         setCourse((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handleChangeContent = (content) => {
+    const handleChangeDescription = (content) => {
         setCourse((prev) => ({ ...prev, description: content }))
+    }
+    const handleChangeFullDescription = (content) => {
+        setCourse((prev) => ({ ...prev, fullDescription: content }))
     }
 
     const handleSubmit = async () => {
@@ -68,10 +74,18 @@ function UpdateCourse() {
                             />
                         </div>
                         <div className={cx('info-group')}>
+                            <label htmlFor="price">Price</label>
+                            <input type="number" name="price" value={course.price} onChange={handleChange} className={cx('input')} required />
+                        </div>
+                        <div className={cx('info-group')}>
                             <label htmlFor="description">Description</label>
+                            <JoditEditor ref={editor} value={course.description} onChange={(content) => handleChangeDescription(content)} />
+                        </div>
+                        <div className={cx('info-group')}>
+                            <label htmlFor="fullDescription">Full Description</label>
+                            <JoditEditor ref={editor} value={course.fullDescription} onChange={(content) => handleChangeFullDescription(content)} />
                         </div>
                     </div>
-                    <JoditEditor ref={editor} value={course.description} onChange={(content) => handleChangeContent(content)} />
 
                     <Button type="submit" submit className={cx('submit')} onClick={handleSubmit}>
                         Save

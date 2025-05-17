@@ -3,8 +3,8 @@ import styles from './UpdateQuizze.module.scss'
 import MainAccount from '../../layouts/MainAccount/MainAccount'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { getQuizzeBySlug } from '../../api/quizzeApi'
-import { getQuestionByQuizzeSlug } from '../../api/questionApi'
+import { getQuizzeBySlug, updateQuizze } from '../../api/quizzeApi'
+import { addNewQuestion, getQuestionByQuizzeSlug } from '../../api/questionApi'
 import { getQuestionType } from '../../api/questionTypeApi'
 import Button from '../../components/Button/Button'
 
@@ -72,9 +72,17 @@ function UpdateQuizze() {
         setQuestions(updatedQuestions)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log('Quizze: ', quizze)
         console.log('Questions: ', questions)
+        try {
+            const quizzeResponse = await updateQuizze(quizze._id, quizze)
+            const questionResponse = await addNewQuestion({ questions: questions, quizzeName: quizze.title })
+            console.log('Question submitted: ', questionResponse)
+            console.log('Quizze submitted: ', quizzeResponse)
+        } catch (error) {
+            console.log('Update quizzes failed: ', error)
+        }
     }
 
     useEffect(() => {
@@ -107,6 +115,16 @@ function UpdateQuizze() {
                 <h1>Quizzes</h1>
                 <div className={cx('container')}>
                     <div className={cx('quizze')}>
+                        <div className={cx('info-group')}>
+                            <label htmlFor="type">Quizze type</label>
+                            <input
+                                type="text"
+                                name="type"
+                                id="type"
+                                value={quizze.type === 'entrytest' ? 'Entry Test' : 'Lesson'}
+                                onChange={handleChangeQuizzeInput}
+                            />
+                        </div>
                         <div className={cx('info-group')}>
                             <label htmlFor="lessonName">Lesson name</label>
                             <input type="text" id="lessonName" name="lessonName" value={quizze.lessonId?.title} readOnly />
@@ -144,7 +162,7 @@ function UpdateQuizze() {
                                 <select
                                     name="questionTypeId"
                                     id="questionTypeId"
-                                    value={question.questionTypeId._id}
+                                    value={question.questionTypeId._id.toString()}
                                     onChange={(e) => handleChangeQuestionOption(e, questionIndex)}
                                 >
                                     {questionTypes.map((questionType, indexQuestionType) => (

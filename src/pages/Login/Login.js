@@ -27,7 +27,7 @@ function Login() {
             if (user.identifier && user.passWord) {
                 const response = await loginUser(user)
                 login({ ...response.user })
-                navigate(routes.listUser)
+                localStorage.setItem('accessToken', response.accessToken)
             } else {
                 alert('Please enter username and password')
             }

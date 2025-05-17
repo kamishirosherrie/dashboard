@@ -1,9 +1,9 @@
 import axiosInstance from './axiosInstance'
 import { apiUrl } from './apiConfig'
 
-export const getQuizzesWithQuestions = async () => {
+export const getAllQuizze = async () => {
     try {
-        const response = await axiosInstance.get(apiUrl.quizzeUrl.getQuizzesWithQuestions)
+        const response = await axiosInstance.get(apiUrl.quizzeUrl.getAllQuizze)
         return response.data
     } catch (error) {
         console.log('Get all quizze failed')
@@ -47,6 +47,16 @@ export const deleteQuizze = async (id) => {
         return response.data
     } catch (error) {
         console.log('Delete quizze failed')
+        throw error
+    }
+}
+
+export const updateQuizze = async (id, quizze) => {
+    try {
+        const response = await axiosInstance.put(apiUrl.quizzeUrl.updateChapter(id), quizze)
+        return response.data
+    } catch (error) {
+        console.log('Update quizze failed')
         throw error
     }
 }
