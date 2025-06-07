@@ -162,7 +162,7 @@ function UpdateQuizze() {
                                 <select
                                     name="questionTypeId"
                                     id="questionTypeId"
-                                    value={question.questionTypeId._id.toString()}
+                                    value={question?.questionTypeId?._id?.toString()}
                                     onChange={(e) => handleChangeQuestionOption(e, questionIndex)}
                                 >
                                     {questionTypes.map((questionType, indexQuestionType) => (
